@@ -5,11 +5,11 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.item}>
+        <Image src="/img/logo.png" alt="logo" width="69" height="69" />
         <ul className={styles.list}>
-          <li className={styles.listItem}>Homepage</li>
           <li className={styles.listItem}>Products</li>
           <li className={styles.listItem}>Menu</li>
-          <Image src="/img/logo.png" alt="logo" width="69" height="69" />
+
           <li className={styles.listItem}>Events</li>
           <li className={styles.listItem}>Blog</li>
           <li className={styles.listItem}>Contact</li>
