@@ -5,15 +5,6 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.item}>
-        <div className={styles.callButton}>
-          <Image src="/img/telephone.png" alt="phone" width="32" height="32" />
-        </div>
-        <div className={styles.texts}>
-          <div className={styles.text}>ORDER NOW!</div>
-          <div className={styles.text}>8829 77 0062</div>
-        </div>
-      </div>
-      <div className={styles.item}>
         <ul className={styles.list}>
           <li className={styles.listItem}>Homepage</li>
           <li className={styles.listItem}>Products</li>
@@ -23,6 +14,15 @@ const Navbar = () => {
           <li className={styles.listItem}>Blog</li>
           <li className={styles.listItem}>Contact</li>
         </ul>
+      </div>
+      <div className={styles.item}></div>
+      <div className={styles.callButton}>
+        <Image src="/img/telephone.png" alt="phone" width="32" height="32" />
+      </div>
+
+      <div className={styles.texts}>
+        <div className={styles.text}>ORDER NOW!</div>
+        <div className={styles.text}>8829 77 0062</div>
       </div>
       <div className={styles.item}>
         <div className={styles.cart}>

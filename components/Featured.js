@@ -12,30 +12,52 @@ import styles from "../styles/Footer.module.css";
 const Featured = () => {
   return (
     <>
-      <h1>Featured Cafe</h1>
-      <Card
-        style={{
-          width: "24rem",
-        }}
-      >
-        <Image
-          src="/img/OysterBar.png"
-          alt="featured restaurant"
-          width="400"
-          height="200"
-        />
-        <CardBody>
-          <CardTitle tag="h5">The Cosmic Clock Oyster House</CardTitle>
-          <CardSubtitle className="mb-2 text-muted" tag="h6">
-            The best of the Ocean
-          </CardSubtitle>
-          <CardText>
-            The Cosmic Clock Oyster House specializes in Avant-Garde seafood
-            dishes, from soups to salads, and of course, oysters.
-          </CardText>
-          <Button>Explore Cosmic Clock Oyster House</Button>
-        </CardBody>
-      </Card>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">&nbsp;</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">&nbsp;</div>
+          <div class="col-sm-8">
+            <h3>Featured Cafe</h3>
+            <Card
+              style={{
+                width: "26rem",
+              }}
+            >
+              <div class="row">
+                <div class="col-sm-2">&nbsp;</div>
+                <div class="col-sm-8">&nbsp;</div>
+                <div class="col-sm-2">&nbsp;</div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-1">&nbsp;</div>
+                <div class="col-sm-10">
+                  <Image
+                    src="/img/OysterBar.png"
+                    alt="featured restaurant"
+                    width="600"
+                    height="400"
+                  />
+                </div>
+                <div class="col-sm-1">&nbsp;</div>
+              </div>
+              <CardBody>
+                <CardTitle tag="h5">The Cosmic Clock Oyster House</CardTitle>
+                <CardSubtitle className="mb-2 text-muted" tag="h6">
+                  The best of the Ocean
+                </CardSubtitle>
+                <CardText>
+                  The Cosmic Clock Oyster House specializes in Avant-Garde
+                  seafood dishes, from soups to salads, and of course, oysters.
+                </CardText>
+                <Button>Explore Cosmic Clock Oyster House</Button>
+              </CardBody>
+            </Card>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
