@@ -37,8 +37,9 @@ const Featured = () => {
                   <Image
                     src="/img/OysterBar.png"
                     alt="featured restaurant"
-                    width="600"
-                    height="400"
+                    width={600}
+                    height={400}
+                    style={{ borderRadius: 10, marginBottom: 10 }}
                   />
                 </div>
                 <div class="col-sm-1">&nbsp;</div>
