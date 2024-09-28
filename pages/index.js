@@ -24,6 +24,7 @@ export default function Home() {
           <div class="col-sm-1">&nbsp;</div>
         </div>
       </div>
+
       <Featured />
     </div>
   );

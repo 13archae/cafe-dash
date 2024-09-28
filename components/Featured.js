@@ -22,7 +22,7 @@ const Featured = () => {
             <h3>Featured Cafe</h3>
             <Card
               style={{
-                width: "26rem",
+                width: "22rem",
               }}
             >
               <div class="row">
