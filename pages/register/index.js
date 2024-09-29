@@ -1,7 +1,6 @@
 /* /pages/register.js */
 
 import React, { useState, useContext } from "react";
-
 import {
   Container,
   Row,
@@ -12,21 +11,22 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { registerUser } from "../../components/signup";
-import {AppContext} from "../../components/context";
+import axios from "axios";
+import { AppContext } from "../../components/context";
 
 const Register = () => {
   const [data, setData] = useState({ email: "", username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const ctx = useContext(AppContext);
+
   return (
     <Container>
       <Row>
         <Col sm="12" md={{ size: 5, offset: 3 }}>
           <div className="paper">
             <div className="header">
-              <img src="" />
+              <img src="/path/to/logo.png" alt="Logo" />
             </div>
             <section className="wrapper">
               {Object.entries(error).length !== 0 &&
@@ -94,7 +94,18 @@ const Register = () => {
                       disabled={loading}
                       onClick={() => {
                         setLoading(true);
-                        registerUser(data.username, data.email, data.password)
+
+                        axios
+                          .post(
+                              `http://localhost:3000/api/user/signup`,
+                              { 
+                                  username: data.username,
+                                  email: data.email,
+                                  password: data.password,
+                                  createdAt: new Date(),
+                                  updatedAt: new Date()
+                              }
+                          )
                           .then((res) => {
                             // set authed user in global context object
                             ctx.setUser(res.data.user);
