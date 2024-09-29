@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 import {
   Container,
   Row,
@@ -20,10 +21,10 @@ function Login(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
-  const appContext = useContext(AppContext);
+  const ctx = useContext(AppContext);
 
   useEffect(() => {
-    if (appContext.isAuthenticated) {
+    if (ctx.isAuthenticated) {
       router.push("/"); // redirect if you're already logged in
     }
   }, []);
@@ -86,17 +87,19 @@ function Login(props) {
                       color="primary"
                       onClick={() => {
                         setLoading(true);
+                        console.log(`data: ${JSON.stringify(data)}`)
                         axios
                           .post(
                               `http://localhost:3000/api/user/login`,
                               { 
-                                  username: data.username,
+                                  username: data.identifier,
                                   password: data.password,
                                   
                               }
                           )
                           .then((res) => {
                             // set authed user in global context object
+                            console.log("res.data", res.data);
                             ctx.setUser(res.data.user);
                             setLoading(false);
                             console.log(`registered user: ${JSON.stringify(res.data)}`)

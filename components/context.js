@@ -13,7 +13,7 @@ const AppProvider = ({ children }) => {
     removeItemFunct: () => {},
     setRemoveItemFunct: {},
     user: false,
-    setUser: false,
+    setUser: () => {},
     userFunct: () => {},
     setUserFunct: {},
   };

@@ -13,15 +13,7 @@ async function login(username, password) {
     const database = client.db('cafe-app');
     const collection = database.collection('users');
 
-    const user = {
-      username: username,
-      email: email,
-      password: password,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-
-    const query = { username: username, password: password };
+    const query = {  $and: [{"username": {$eq: username}}, {"password": {$eq: password}}] }; ;
 
     // Find all documents in the collection
     const result = await collection.find(query).toArray();
@@ -34,7 +26,7 @@ async function login(username, password) {
 }
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     const { username, password } = req.body;
     try {
       const result = await login(username, password);
