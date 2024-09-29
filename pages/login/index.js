@@ -86,16 +86,28 @@ function Login(props) {
                       color="primary"
                       onClick={() => {
                         setLoading(true);
-                        login(data.identifier, data.password)
+                        axios
+                          .post(
+                              `http://localhost:3000/api/user/login`,
+                              { 
+                                  username: data.username,
+                                  password: data.password,
+                                  
+                              }
+                          )
                           .then((res) => {
+                            // set authed user in global context object
+                            ctx.setUser(res.data.user);
                             setLoading(false);
-                            // set authed User in global context to update header/app state
-                            appContext.setUser(res.data.user);
+                            console.log(`registered user: ${JSON.stringify(res.data)}`)
                           })
                           .catch((error) => {
+                            console.log(`error in register: ${error}`)
                             //setError(error.response.data);
                             setLoading(false);
                           });
+
+
                       }}
                     >
                       {loading ? "Loading... " : "Submit"}
