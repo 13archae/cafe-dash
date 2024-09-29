@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.item}>
-        <Image src="/img/logo.png" alt="logo" width="200" height="200" />
+        <Image src="/img/logo.png" alt="logo" width={200} height={200} style={{padding: "20px"}}/>
         <ul className={styles.list}>
           <li className={styles.listItem}>
               <Link href="/">
@@ -63,12 +63,12 @@ const Navbar = () => {
       </div>
       <div className={styles.item}></div>
       <div className={styles.callButton}>
-        <Image src="/img/telephone.png" alt="phone" width="32" height="32" />
+        <Image src="/img/telephone.png" alt="phone" width={32} height={32} />
       </div>
 
       <div className={styles.item}>
         <div className={styles.cart}>
-          <Image src="/img/cart.png" alt="cart" width="30" height="30" />
+          <Image src="/img/cart.png" alt="cart" width={30} height={30} />
           <div className={styles.counter}>2</div>
         </div>
       </div>
