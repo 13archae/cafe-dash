@@ -1,7 +1,7 @@
 .container {
-  height: 100px;
+  height: 150px;
   padding: 0px 50px;
-  background-color: #000000;
+  background-color: #2a7b90;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -57,7 +57,9 @@
 
 .listItem {
   margin: 20px;
-  font-weight: 500;
+  font-weight: 600;
+  width: 100px;
+  font-size: larger;
 }
 
 .cart {
@@ -79,6 +81,27 @@
   font-weight: bold;
   color: #5e503f;
 }
+
+/* unvisited link */
+.listItem > a:link {
+  color: #f47525;
+}
+
+/* visited link */
+.listItem > a:visited {
+  color: #dda15e ;
+}
+
+/* mouse over link */
+.listItem > a:hover {
+  color: #fefae0 ;
+}
+
+/* selected link */
+.listItem > a:active {
+  color: #197278 ;
+}
+
 
 @media screen and (max-width: 480px) {
   .item:nth-child(2) {

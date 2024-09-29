@@ -12,16 +12,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-1">&nbsp;</div>
-          <div class="h5 col-sm-10 mb-1">
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-1">&nbsp;</div>
+          <div className="h5 col-sm-10 mb-1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
           </div>
-          <div class="col-sm-1">&nbsp;</div>
+          <div className="col-sm-1">&nbsp;</div>
         </div>
       </div>
 
