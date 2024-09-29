@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.item}>
-        <Image src="/img/logo.png" alt="logo" width={200} height={200} style={{padding: "20px"}}/>
+        <Image src="/img/logo.png" alt="logo" width={200} height={200} priority={true} style={{padding: "20px"}}/>
         <ul className={styles.list}>
           <li className={styles.listItem}>
               <Link href="/">

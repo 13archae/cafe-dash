@@ -12,7 +12,7 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { registerUser } from "../../components/auth";
+import { registerUser } from "../../components/signup";
 import {AppContext} from "../../components/context";
 
 const Register = () => {

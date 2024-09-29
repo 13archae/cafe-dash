@@ -5,7 +5,7 @@ import Router from "next/router";
 import Cookie from "js-cookie";
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
+const API_URL = "http://localhost:3000"; //process.env.API_ROOT || "Missing API_ROOT";
 
 //register a new user
 export const registerUser = (username, email, password) => {
@@ -15,10 +15,10 @@ export const registerUser = (username, email, password) => {
   }
   return new Promise((resolve, reject) => {
     axios
-      .post(`${API_URL}/auth/local/register`, { username, email, password })
+      .post(`${API_URL}/api/user/signup`, { username, email, password })
       .then((res) => {
         //set token response from Strapi for server validation
-        Cookie.set("token", res.data.jwt);
+        //Cookie.set("token", res.data.jwt);
 
         //resolve the promise to set loading to false in SignUp form
         resolve(res);
