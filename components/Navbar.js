@@ -8,7 +8,9 @@ import styles from "../styles/Navbar.module.css";
 // @refresh reset
 
 const Navbar = () => {
-  const ctx = useContext(AppContext);
+  const {user, setUser, isAuthenticated, setIsAuthenticated} = useContext(AppContext);
+
+  console.log("Navbar user:" ,user);
   return (
     <div className={styles.container}>
       <div className={styles.item}>
@@ -20,8 +22,8 @@ const Navbar = () => {
               </Link>
             </li>
             <li className= {styles.listItem}>
-              {ctx.user ? (
-                <h5>{ctx.user.username}</h5>
+              {isAuthenticated ? (
+                <h5>{user.username}</h5>
               ) : (
                 <Link href="/register">
                   Sign up
@@ -29,7 +31,7 @@ const Navbar = () => {
               )}
             </li>
             <li className= {styles.listItem}>
-              {ctx.user ? (
+              {isAuthenticated ? (
                 <Link href="/" onClick={() => {
                   logout();
                   setUser(null);
@@ -46,7 +48,7 @@ const Navbar = () => {
             </li>
 
             <li className= {styles.listItem}>
-              {ctx.user ? (
+              {isAuthenticated ? (
                 <Link href="/cafes" onClick={() => {
                   
                 }}>

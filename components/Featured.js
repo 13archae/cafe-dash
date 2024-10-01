@@ -12,28 +12,28 @@ import styles from "../styles/Footer.module.css";
 const Featured = () => {
   return (
     <>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">&nbsp;</div>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">&nbsp;</div>
         </div>
-        <div class="row">
-          <div class="col-sm-4">&nbsp;</div>
-          <div class="col-sm-8">
+        <div className="row">
+          <div className="col-sm-4">&nbsp;</div>
+          <div className="col-sm-8">
             <h3>Featured Cafe</h3>
             <Card
               style={{
                 width: "22rem",
               }}
             >
-              <div class="row">
-                <div class="col-sm-2">&nbsp;</div>
-                <div class="col-sm-8">&nbsp;</div>
-                <div class="col-sm-2">&nbsp;</div>
+              <div className="row">
+                <div className="col-sm-2">&nbsp;</div>
+                <div className="col-sm-8">&nbsp;</div>
+                <div className="col-sm-2">&nbsp;</div>
               </div>
 
-              <div class="row">
-                <div class="col-sm-1">&nbsp;</div>
-                <div class="col-sm-10">
+              <div className="row">
+                <div className="col-sm-1">&nbsp;</div>
+                <div className="col-sm-10">
                   <Image
                     src="/img/OysterBar.png"
                     alt="featured restaurant"
@@ -42,7 +42,7 @@ const Featured = () => {
                     style={{ borderRadius: 10, marginBottom: 10 }}
                   />
                 </div>
-                <div class="col-sm-1">&nbsp;</div>
+                <div className="col-sm-1">&nbsp;</div>
               </div>
               <CardBody>
                 <CardTitle tag="h5">The Cosmic Clock Oyster House</CardTitle>

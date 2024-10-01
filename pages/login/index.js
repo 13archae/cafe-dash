@@ -13,24 +13,29 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { login } from "../../components/auth";
-import { AppContext } from "../../components/context";
+import { AppContext } from "@/components/context";
 
 function Login(props) {
   const [data, updateData] = useState({ identifier: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
-  const ctx = useContext(AppContext);
+  const {user, setUser, isAuthenticated, setIsAuthenticated} = useContext(AppContext);
 
   useEffect(() => {
-    if (ctx.isAuthenticated) {
+    if (isAuthenticated) {
       router.push("/"); // redirect if you're already logged in
     }
   }, []);
 
   function onChange(event) {
     updateData({ ...data, [event.target.name]: event.target.value });
+  }
+
+  function forwardToHome() { 
+    if (isAuthenticated) {
+       // redirect if you're already logged in
+    }
   }
 
   return (
@@ -99,15 +104,20 @@ function Login(props) {
                           )
                           .then((res) => {
                             // set authed user in global context object
-                            console.log("res.data", res.data);
-                            ctx.setUser(res.data.user);
+                            //console.log("res.data", res.data);
+                            setUser(res.data.result[0]);
                             setLoading(false);
-                            console.log(`registered user: ${JSON.stringify(res.data)}`)
+                            setIsAuthenticated(true);
+                            
+                            console.log(`response data: ${JSON.stringify(res.data.result[0])}`);
+                            router.push("/");
+
                           })
                           .catch((error) => {
                             console.log(`error in register: ${error}`)
-                            //setError(error.response.data);
+                            setError(error.response.data);
                             setLoading(false);
+                            
                           });
 
 
