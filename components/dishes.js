@@ -13,38 +13,29 @@ import {
   Col,
 } from "reactstrap";
 function Dishes({ restId }) {
-  const [restaurantID, setRestaurantID] = useState();
+  //const [restaurantID, setRestaurantID] = useState();
+
+  const [dishes, setDishes] = useState();
   const { addItem } = useContext(AppContext);
 
-  const GET_RESTAURANT_DISHES = gql`
-    query ($id: ID!) {
-      restaurant(id: $id) {
-        id
-        name
-        dishes {
-          id
-          name
-          description
-          price
-          image {
-            url
-          }
-        }
-      }
-    }
-  `;
+  
 
-  const router = useRouter();
+  useEffect(() => {
+    axios
+        .get(
+            `http://localhost:3000/api/dishes`
+        )
+        .then((res) => {
+          setDishes(res.data.result);
 
-  const { loading, error, data } = useQuery(GET_RESTAURANT_DISHES, {
-    variables: { id: restId },
-  });
+        })
+        .catch((error) => {
+          console.log(`error in cafes: ${error}`)
+          
+        });
+      console.log(`Query Data: ${cafes}`)
+    }, []); 
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>ERROR here</p>;
-  if (!data) return <p>Not found</p>;
-
-  let restaurant = data.restaurant;
 
   if (restId > 0) {
     return (
@@ -55,7 +46,7 @@ function Dishes({ restId }) {
               <CardImg
                 top={true}
                 style={{ height: 150, width: 150 }}
-                src={`http://localhost:1337${res.image.url}`}
+                src={`${res.image.url}`}
               />
               <CardBody>
                 <CardTitle>{res.name}</CardTitle>
@@ -65,7 +56,7 @@ function Dishes({ restId }) {
                 <Button
                   color="info"
                   outline-color="primary"
-                  onClick={() => addItem(res)}
+                  // TODO: onClick={() => addItem(res)}
                 >
                   + Add To Cart
                 </Button>
