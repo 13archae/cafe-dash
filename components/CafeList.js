@@ -59,10 +59,11 @@ function CafeList(props) {
             top={true}
             style={{ height: 200 }}
             src={
-              `http://localhost:3000` + res.image.url
+               res.image.url
             }
           />
           <CardBody>
+          <CardTitle>{res.name}</CardTitle>  
             <CardText>{res.description}</CardText>
           </CardBody>
           <div className="card-footer">

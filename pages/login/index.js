@@ -33,13 +33,14 @@ function Login(props) {
   }
 
   function forwardToHome() { 
-    if (isAuthenticated) {
-       // redirect if you're already logged in
+      if (isAuthenticated) {
+         // redirect if you're already logged in
+      }
     }
-  }
+  
+    return (
+      <Container style={{ backgroundColor: '#f47525' }}>
 
-  return (
-    <Container>
       <Row>
         <Col sm="12" md={{ size: 5, offset: 3 }}>
           <div className="paper">
@@ -89,7 +90,7 @@ function Login(props) {
                     </span>
                     <Button
                       style={{ float: "right", width: 120 }}
-                      color="primary"
+                      color="#2a7b90"
                       onClick={() => {
                         setLoading(true);
                         console.log(`data: ${JSON.stringify(data)}`)
@@ -148,7 +149,7 @@ function Login(props) {
           .header {
             width: 100%;
             height: 120px;
-            background-color: #2196f3;
+            background-color: #2a7b90;
             margin-bottom: 30px;
             border-radius-top: 6px;
           }
@@ -161,6 +162,7 @@ function Login(props) {
           img {
             margin: 15px 30px 10px 50px;
           }
+            
         `}
       </style>
     </Container>

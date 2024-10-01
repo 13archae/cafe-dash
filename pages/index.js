@@ -15,16 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-1">&nbsp;</div>
-          <div className="h5 col-sm-10 mb-1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          </div>
-          <div className="col-sm-1">&nbsp;</div>
-        </div>
-      </div>
+     
 
       <Featured />
     </div>

@@ -48,7 +48,7 @@
 }
 
 .list {
-  padding: 0;
+  padding: 4;
   display: flex;
   align-items: center;
   list-style: none;
@@ -58,7 +58,7 @@
 .listItem {
   margin: 20px;
   font-weight: 600;
-  width: 100px;
+  width: 200px;
   font-size: larger;
 }
 
