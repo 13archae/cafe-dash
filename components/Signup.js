@@ -1,35 +1,3 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
-
-const uri = "mongodb+srv://13archae:13archae13archae@cluster0.5soii.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverApi: ServerApiVersion.v1
-});
-
-async function insertUser(username, email, password) {
-  try {
-    await client.connect();
-
-    const database = client.db('cafe-app');
-    const collection = database.collection('users');
-
-    const user = {
-      username: username,
-      email: email,
-      password: password,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-
-    const result = await collection.insertOne(user);
-    return result;
-  } finally {
-    await client.close();
-  }
-}
-
 // pages/api/signup.js
 
 import { MongoClient, ServerApiVersion } from 'mongodb';

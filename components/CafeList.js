@@ -1,10 +1,10 @@
 
-//import Dishes from "./dishes"
+import Dishes from "./dishes"
 import { useContext, useState, useEffect } from 'react';
 import axios from "axios";
 
 
-import AppContext from "./context"
+import { AppContext } from "./context"
 import {
   Button,
   Card,
@@ -18,7 +18,9 @@ import {
 } from "reactstrap";
 
 function CafeList(props) {
-  const [cafes, setCafes] = useState([])
+  const [cafes, setCafes] = useState([]);
+  const [cafeId, setCafeId] = useState([]);
+  //const [cafeID, setCafeID] = useState([]);
   //const { cart } = useContext(AppContext);
   //const [state, setState] = useState(cart);
 
@@ -37,20 +39,22 @@ function CafeList(props) {
           //setLoading(false);
           
         });
-      console.log(`Query Data: ${cafes}`)
+      console.log(`Query Data: ${JSON.stringify(cafes)}`)
     }, []); 
 
 
-  /* let searchQuery = cafes.filter((res) => {
-    return res.name.toLowerCase().includes(props.search)
-   }) || [];
+  // let searchQuery = cafes.filter((res) => {
+  //   return res.name.toLowerCase().includes(props.search)
+  //  }) || [];
 
-  let restId = searchQuery[0] ? searchQuery[0].id : null; */
+  // cafeID = searchQuery[0] ? searchQuery[0].id : null; 
 
   //definet renderer for Dishes
-  /* const renderDishes = (restaurantID) => {
-    return (<Dishes restId={restaurantID}> </Dishes>)
-  }; */
+  const renderDishes = (cafeId) => {
+    console.log(`renderDishes: cafeId: ${cafeId}`);
+    return (<Dishes theCafeId={cafeId}> </Dishes>)
+  };
+
   if (cafes.length > 0) {
     const cafeList = cafes.map((res) => (
       <Col xs="6" sm="4" key={res.id}>
@@ -68,7 +72,7 @@ function CafeList(props) {
           </CardBody>
           <div className="card-footer">
 
-            {/* <Button color="info" onClick={() => setRestaurantID(res.id)}>{res.name}</Button> */}
+            <Button color="info" onClick={() => setCafeId(res.id)} >Select Dishes</Button>
 
           </div>
         </Card>
@@ -82,15 +86,15 @@ function CafeList(props) {
           {cafeList}
         </Row>
 
-        {/* <Row xs='3'>
-          {renderDishes(restaurantID)}
-        </Row> */}
+        <Row xs='3'>
+          {renderDishes(cafeId)}
+        </Row>
 
       </Container>
 
     )
   } else {
-    return <h1> No Restaurants Found</h1>
+    return <h1> No Cafes Found</h1>
   }
 }
 export default CafeList

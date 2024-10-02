@@ -18,7 +18,7 @@ async function getDishes(cafeId) {
     // Find all documents in the collection
     const result = await collection.find(query).toArray();
 
-    console.log(result);
+    console.log("In dishes api: ",result);
     return result;
   } finally {
     await client.close();
@@ -28,6 +28,7 @@ async function getDishes(cafeId) {
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const {cafeId} = req.body;
+    console.log(`from api call: cafeId: ${cafeId}`);
     try {
       const result = await getDishes(cafeId);
       res.status(200).json({ success: true, result });

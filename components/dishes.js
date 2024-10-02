@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import { gql, useQuery } from "@apollo/client";
-import { useState, useContext } from "react";
-import AppContext from "./context";
+import { useState, useContext, useEffect } from "react";
+import {AppContext} from "./context";
+import axios from "axios";
 import {
   Button,
   Card,
@@ -12,35 +12,45 @@ import {
   Row,
   Col,
 } from "reactstrap";
-function Dishes({ restId }) {
+function Dishes({ theCafeId }) {
   //const [restaurantID, setRestaurantID] = useState();
 
   const [dishes, setDishes] = useState();
-  const { addItem } = useContext(AppContext);
+  //const { addItem } = useContext(AppContext);
 
+  console.log(`in dishes: cafeId : ${theCafeId}`);
   
 
   useEffect(() => {
+    if (theCafeId < 1) {
+      theCafeId = 1;
+    } 
     axios
-        .get(
-            `http://localhost:3000/api/dishes`
-        )
+        .post(
+            `http://localhost:3000/api/dishes`,
+            { 
+              cafeId: theCafeId
+          }
+      )
         .then((res) => {
+
+          console.log(res);
           setDishes(res.data.result);
 
         })
         .catch((error) => {
-          console.log(`error in cafes: ${error}`)
+          console.log(`error in dishes: ${error}`)
           
         });
-      console.log(`Query Data: ${cafes}`)
-    }, []); 
+      console.log(`Query Data: ${dishes}`);
+
+    }, [theCafeId]);
 
 
-  if (restId > 0) {
+  if (theCafeId && theCafeId > 0 && dishes && dishes.length > 0) {
     return (
       <>
-        {restaurant.dishes.map((res) => (
+        {dishes.map((res) => (
           <Col xs="6" sm="4" style={{ padding: 0 }} key={res.id}>
             <Card style={{ margin: "0 10px" }}>
               <CardImg
@@ -51,6 +61,7 @@ function Dishes({ restId }) {
               <CardBody>
                 <CardTitle>{res.name}</CardTitle>
                 <CardText>{res.description}</CardText>
+                <CardText>${res.price}</CardText>
               </CardBody>
               <div className="card-footer">
                 <Button
