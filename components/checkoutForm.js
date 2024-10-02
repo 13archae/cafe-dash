@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { FormGroup, Label, Input } from "reactstrap";
 import fetch from "isomorphic-fetch";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import CardSection from "./cardSection";
+import CardSection  from "./cardSection";
 import { AppContext } from "./context";
 import Cookies from "js-cookie";
 
@@ -16,7 +16,7 @@ function CheckoutForm() {
   const [error, setError] = useState("");
   const stripe = useStripe();
   const elements = useElements();
-  const appContext = useContext(AppContext);
+  const { cart, user } = useContext(AppContext);
 
   function onChange(e) {
     // set the key = to the name property equal to the value typed
@@ -28,6 +28,12 @@ function CheckoutForm() {
   async function submitOrder() {
     event.preventDefault();
 
+    console.log("user._id: ", user._id);
+
+    const userId = user._id;
+
+    console.log("userId: ", userId);
+
     // // Use elements.getElement to get a reference to the mounted Element.
     const cardElement = elements.getElement(CardElement);
 
@@ -38,21 +44,33 @@ function CheckoutForm() {
 
     const token = await stripe.createToken(cardElement);
     const userToken = Cookies.get("token");
-    const response = await fetch(`${API_URL}/orders`, {
+
+/* console.log("DATA:  :", JSON.stringify({
+  user: user,
+  amount: Number(Math.round(cart.total + "e2") + "e-2"),
+  dishes: cart.items,
+  address: data.address,
+  city: data.city,
+  state: data.state,
+  token: token.id})); */
+    
+    const response = await fetch(`${API_URL}/api/orders`, {
       method: "POST",
       headers: userToken && { Authorization: `Bearer ${userToken}` },
       body: JSON.stringify({
-        amount: Number(Math.round(appContext.cart.total + "e2") + "e-2"),
-        dishes: appContext.cart.items,
+        userId: userId,
+        amount: Number(Math.round(cart.total + "e2") + "e-2"),
+        dishes: cart.items,
         address: data.address,
         city: data.city,
         state: data.state,
-        token: token.token.id,
+        token: token.id,
+      
       }),
     });
 
     if (!response.ok) {
-      setError(response.statusText);
+      setError();
       console.log("SUCCESS");
     }
 

@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function App({ Component, pageProps }) {
   //dotenv.config();
 
-const [user, setUser] = useState(null);
+const [user, setUser] = useState({});
 const [isAuthenticated, setIsAuthenticated] = useState(false);
 const [cart, setCart] = useState([]);
 const[total, setTotal] = useState(0.00);
