@@ -39,7 +39,7 @@ function Login(props) {
     }
   
     return (
-      <Container style={{ backgroundColor: '#f47525' }}>
+      <Container style={{ backgroundColor: '#2a7b90' }}>
 
       <Row>
         <Col sm="12" md={{ size: 5, offset: 3 }}>

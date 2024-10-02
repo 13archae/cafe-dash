@@ -1,10 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import CafeList from "@/components/CafeList";
+import { AppContext } from "@/components/context";
 //  require('dotenv').config();
 
 export default function Cafes() {
+    const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AppContext);
+
+    const router = useRouter()
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+          router.push("/"); // redirect if you're not logged in
+        }
+      }, []);
 
   return (
     <div className="container">

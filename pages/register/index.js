@@ -1,6 +1,7 @@
 /* /pages/register.js */
 
-import React, { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useRouter } from "next/router";
 import {
   Container,
   Row,
@@ -12,13 +13,21 @@ import {
   Input,
 } from "reactstrap";
 import axios from "axios";
-import { AppContext } from "../../components/context";
+import { AppContext } from "@/components/context";
 
 const Register = () => {
   const [data, setData] = useState({ email: "", username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
-  const ctx = useContext(AppContext);
+  const router = useRouter()
+
+  const {user, setUser, isAuthenticated, setIsAuthenticated} = useContext(AppContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/"); // redirect if you're not logged in
+    }
+  }, []);
 
   return (
     <Container>
