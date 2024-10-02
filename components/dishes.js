@@ -16,7 +16,7 @@ function Dishes({ theCafeId }) {
   //const [restaurantID, setRestaurantID] = useState();
 
   const [dishes, setDishes] = useState();
-  //const { addItem } = useContext(AppContext);
+  const { addItem } = useContext(AppContext);
 
   console.log(`in dishes: cafeId : ${theCafeId}`);
   
@@ -67,7 +67,7 @@ function Dishes({ theCafeId }) {
                 <Button
                   color="info"
                   outline-color="primary"
-                  // TODO: onClick={() => addItem(res)}
+                  onClick={() => addItem(res)}
                 >
                   + Add To Cart
                 </Button>

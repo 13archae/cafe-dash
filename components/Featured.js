@@ -40,6 +40,7 @@ const Featured = () => {
                     width={600}
                     height={400}
                     style={{ borderRadius: 10, marginBottom: 10 }}
+                    priority={true}
                   />
                 </div>
                 <div className="col-sm-1">&nbsp;</div>

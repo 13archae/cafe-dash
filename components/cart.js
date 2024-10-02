@@ -6,8 +6,8 @@ import Link from "next/link"
 // we can pass cart data in via props method 
 // the alternative is using useContext as below
 function Cart() {
-  let isAuthenticated = true;
-  let {cart,addItem,removeItem} = useContext(AppContext);
+  //let isAuthenticated = true;
+  let {cart,addItem,removeItem, isAuthenticated} = useContext(AppContext);
   //const [cartA, setCartA] = useState({cart})
   //cart = value.cart;
   //console.log('props:'+ JSON.stringify(value));
@@ -15,7 +15,7 @@ function Cart() {
   
   //   problem is that cart may not be set
   const router = useRouter();
-  console.log(`Router Path: ${JSON.stringify(router)}`)
+  // console.log(`Router Path: ${JSON.stringify(router.asPath)}`)
   const renderItems = ()=>{
   let {items} = cart;
    console.log(`items: ${JSON.stringify(items)}`)
@@ -105,7 +105,7 @@ const checkoutItems = ()=>{
             {checkoutItems()}
           </div>
           
-          {console.log(`Router Path: ${router.asPath}`)}
+          //{console.log(`Router Path: ${router.asPath}`)}
         </CardBody>
       </Card>
       <style jsx>{`

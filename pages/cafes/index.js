@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import CafeList from "@/components/CafeList";
+import Cart from "@/components/cart";
 import { AppContext } from "@/components/context";
 //  require('dotenv').config();
 
@@ -33,6 +34,7 @@ export default function Cafes() {
       </div>
 
       <CafeList />
+        <Cart></Cart>
     </div>
   );
 }
