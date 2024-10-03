@@ -1,14 +1,12 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+//const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const uri = process.env.MONGODB_URI;
-
-const client = new MongoClient(uri, {
-  serverApi: ServerApiVersion.v1
-});
+//session MongoDB Client
+import clientPromise from '@/lib/mongodb';
+const client = await clientPromise;
 
 async function getCafes() {
   try {
-    await client.connect();
+    //await client.connect();
 
     const database = client.db('cafe-app');
     const collection = database.collection('cafes');
@@ -20,8 +18,8 @@ async function getCafes() {
 
     console.log(result);
     return result;
-  } finally {
-    await client.close();
+  } catch(error) {
+    console.error("Error in Cafes: ", error);
   }
 }
 

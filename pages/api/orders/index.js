@@ -1,22 +1,20 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+//const { MongoClient, ServerApiVersion } = require('mongodb');
+
+//session MongoDB Client
+import clientPromise from '@/lib/mongodb';
+const client = await clientPromise;
 
 const stripe = require("stripe")(
   // Enter your private key for test environment of STRIPE here
   process.env.STRIPE_SECRET_KEY
 );
 
-const uri = process.env.MONGODB_URI;
-
-const client = new MongoClient(uri, {
-  serverApi: ServerApiVersion.v1
-});
-
 async function insertOrder( userId, address, amount, dishes, token, city, state) {
   try { 
 
-    await client.connect();
+    //await client.connect();
 
-    console.log("Token in insertOrder: ", token);
+    console.log("Token in ")
 
     const stripeAmount = Math.floor(amount * 100);
     // charge on stripe
@@ -46,8 +44,6 @@ async function insertOrder( userId, address, amount, dishes, token, city, state)
     return result;
   } catch(error) {
     console.error("Error in Orders: ", error);
-  }finally {
-    await client.close();
   }
 }
 

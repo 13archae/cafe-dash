@@ -1,6 +1,6 @@
 import Layout from "../components/Layout";
 import "@/styles/globals.css";
-import "/styles/bootstrap.min.css";
+import "@/styles/bootstrap.min.css";
 //import dotenv from "dotenv";
 import { AppContext } from "@/components/context";
 import { useState } from "react";
@@ -113,7 +113,7 @@ removeItem = (item) => {
       addItem,
       removeItem,
       state,
-      setState
+      setState,
     }}>
       <Layout>
         <Component {...pageProps} />

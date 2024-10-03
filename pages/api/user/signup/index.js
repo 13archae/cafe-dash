@@ -1,14 +1,12 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+//const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const uri = process.env.MONGODB_URI;
-
-const client = new MongoClient(uri, {
-  serverApi: ServerApiVersion.v1
-});
+//session MongoDB Client
+import clientPromise from '@/lib/mongodb';
+const client = await clientPromise;
 
 async function insertUser(username, email, password) {
   try {
-    await client.connect();
+    //await client.connect();
 
     const database = client.db('cafe-app');
     const collection = database.collection('users');
@@ -23,9 +21,9 @@ async function insertUser(username, email, password) {
 
     const result = await collection.insertOne(user);
     return result;
-  } finally {
-    await client.close();
-  }
+  } catch(error) {
+    console.error("Error in Users: ", error);
+}
 }
 
 export default async function handler(req, res) {
