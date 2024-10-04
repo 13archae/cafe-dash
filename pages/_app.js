@@ -5,6 +5,7 @@ import "@/styles/bootstrap.min.css";
 import { AppContext } from "@/components/context";
 import { useState } from "react";
 
+
 export default function App({ Component, pageProps }) {
   //dotenv.config();
 

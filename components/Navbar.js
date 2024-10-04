@@ -41,7 +41,7 @@ const Navbar = () => {
                   
                 </Link>
               ) : (
-                <Link href="auth/signIn/nextauth">
+                <Link href="/api/auth/signIn">
                   Sign in
                 </Link>
               )}

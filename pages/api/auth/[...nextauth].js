@@ -2,10 +2,16 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise from "@/lib/mongodb";
+import {FirebaseAdapter} from "@next-auth/firebase-adapter";
+
+import { db } from "@/firebase.config";
+
+import clientPromise from '@/lib/mongodb';
+const client = await clientPromise;
 
 export default NextAuth({
-    adapter: MongoDBAdapter(clientPromise),
+    //adapter: MongoDBAdapter(client),
+    adapter: FirebaseAdapter(db),
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -20,7 +26,7 @@ export default NextAuth({
                     const database = client.db('cafe-app');
                     const collection = database.collection('users');
                 
-                    const query = {  $and: [{"username": {$eq: credentials.email}}, {"password": {$eq: credentials.password}}] }; ;
+                    const query = {  $and: [{"email": {$eq: credentials.email}}, {"password": {$eq: credentials.password}}] }; ;
                 
                     // Find all documents in the collection
                     const result = await collection.find(query).toArray();
