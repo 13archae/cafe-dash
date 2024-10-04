@@ -1,6 +1,6 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
-import { signIn, signOut} from "nextauth-react";
+import { signIn, signOut} from "next-auth/react";
 
 //import Head from "next/head";
 //import Image from "next/image";

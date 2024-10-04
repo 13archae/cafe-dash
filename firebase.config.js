@@ -2,10 +2,10 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import {getFirestore} from "firebase/firestore";
 import {getStorage} from "firebase/storage";
 
-import { getAuth } from "firebase/auth";
-import { FirebaseAdapter } from "@next-auth/firebase-adapter";
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+//import { getAuth } from "firebase/auth";
+//import { FirebaseAdapter } from "@next-auth/firebase-adapter";
+//import NextAuth from "next-auth";
+//import GoogleProvider from "next-auth/providers/google";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

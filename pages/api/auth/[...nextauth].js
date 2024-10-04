@@ -1,19 +1,23 @@
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+//import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import {FirebaseAdapter} from "@next-auth/firebase-adapter";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import { FirebaseAdapter } from "@auth/firebase-adapter";
 
 import { db } from "@/firebase.config";
+import * as firestormFunctions from "firebase/firestore";
 
 import clientPromise from '@/lib/mongodb';
 const client = await clientPromise;
 
 export default NextAuth({
     //adapter: MongoDBAdapter(client),
-    adapter: FirebaseAdapter(db),
+    adapter: FirebaseAdapter({
+        db: db,
+        ...firestormFunctions,
+    }),
     providers: [
-        CredentialsProvider({
+        /* CredentialsProvider({
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "jsmith@example.com" },
@@ -37,7 +41,7 @@ export default NextAuth({
                     console.error("Error in Users: ", error);
                   }
             },
-        }),
+        }), */
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
