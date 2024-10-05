@@ -4,9 +4,10 @@ import "@/styles/bootstrap.min.css";
 //import dotenv from "dotenv";
 import { AppContext } from "@/components/context";
 import { useState } from "react";
+import { SessionProvider } from "next-auth/react"
 
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps: {session, ...pageProps} }) {
   //dotenv.config();
 
 const [user, setUser] = useState({});
@@ -102,6 +103,7 @@ removeItem = (item) => {
 
 
   return (
+    <SessionProvider session={session}>
     <AppContext.Provider value={{
       user, 
       setUser, 
@@ -120,5 +122,6 @@ removeItem = (item) => {
         <Component {...pageProps} />
       </Layout>
     </AppContext.Provider>
+    </SessionProvider>
   );
 }

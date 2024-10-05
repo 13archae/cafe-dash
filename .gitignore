@@ -130,4 +130,6 @@ dist
 .pnp.*
 
 # MAC
-*/.DS_Store
+.DS_Store
+
+cafedash-0-0-1-SA.json

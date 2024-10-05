@@ -1,6 +1,8 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
+
+import { initializeApp, cert, getApps, getApp  } from "firebase-admin/app"
 import {getFirestore} from "firebase/firestore";
-import {getStorage} from "firebase/storage";
+
+/*import {getStorage} from "firebase/storage";
 
 //import { getAuth } from "firebase/auth";
 //import { FirebaseAdapter } from "@next-auth/firebase-adapter";
@@ -17,11 +19,18 @@ const firebaseConfig = {
     appId: process.env.FIREBASE_APP_ID
   };
   
-  
+  */
   // Initialize Firebase
-  const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
+const admin = require("firebase-admin");
+
+const serviceAccount = require("@/cafedash-0-0-1-SA.json"); 
+
+  const app = getApps() > 0 ? admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+  }) : getApps[0];
 
   const db = getFirestore(app);
-  const storage = getStorage(app);
+  //const storage = getStorage(app);
+  
 
-  export { app, db, storage };
+  export { admin, app, db }; 

@@ -1,26 +1,30 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
-import { signIn, signOut} from "next-auth/react";
+import { signIn, signOut, useSession} from "next-auth/react";
 
 //import Head from "next/head";
 //import Image from "next/image";
 //import styles from "../styles/Home.module.css";
-//import Featured from "@/components/Featured";
-//  require('dotenv').config();
+import Featured from "@/components/Featured";
 
 export default function index() {
 
+  const { data: session } = useSession()
+  if(session) {
+    return ( 
+      <>
+        Signed in as {session.user.email} <br/>
+        <button onClick={() => signOut()}>Sign out</button>
+        <Featured />
+      </>
+    )
+  }
+  else{
   return (
-    
-    
-    <div className="flex h-screen w-screen items-center justify-center bg-slate-50">
-    
-      <div onClick={signIn} className="flex w-64 h-auto cursor-pointer items-center justify-center border rounded-md">
-        <FcGoogle fontSize={30} className="mr-2" />
-        <span className="ml-2 text-lg font-semibold">Sign in with Google</span> 
-      </div>
-    
-    </div>
- 
-  );
+    <>
+      Not signed in <br/>
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
+  )
+}
 }
