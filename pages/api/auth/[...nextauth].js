@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials"
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
+//import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import { getAuth } from "firebase-admin/auth"; 
 import { admin } from "@/firebase.config";   

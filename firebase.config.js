@@ -1,13 +1,7 @@
 
-import { initializeApp, cert, getApps, getApp  } from "firebase-admin/app"
+import { initializeApp, getApps, getApp  } from "firebase-admin/app"
 import {getFirestore} from "firebase/firestore";
 
-/*import {getStorage} from "firebase/storage";
-
-//import { getAuth } from "firebase/auth";
-//import { FirebaseAdapter } from "@next-auth/firebase-adapter";
-//import NextAuth from "next-auth";
-//import GoogleProvider from "next-auth/providers/google";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,18 +13,28 @@ const firebaseConfig = {
     appId: process.env.FIREBASE_APP_ID
   };
   
-  */
+  
   // Initialize Firebase
-const admin = require("firebase-admin");
+import admin from "firebase-admin";
 
-const serviceAccount = require("@/cafedash-0-0-1-SA.json"); 
+import serviceAccount from "./cafedash-0-0-1-SA.json"; 
 
-  const app = getApps() > 0 ? admin.initializeApp({
+const apps = getApps()
+
+let app = null
+
+  if (apps.length  === 0) {
+    app = initializeApp({
       credential: admin.credential.cert(serviceAccount)
-  }) : getApps[0];
+  })
+  } else {
+    app = getApp()
+    }
+  
+  
 
-  const db = getFirestore(app);
+  //const db = getFirestore(app);
   //const storage = getStorage(app);
   
 
-  export { admin, app, db }; 
+  //export { admin, app, db }; 
