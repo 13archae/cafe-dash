@@ -81,7 +81,7 @@ const checkoutItems = ()=>{
       </Badge>
           <Link href="/checkout/">
             <Button style={{ width: "60%" }} color="primary">
-              <a>Order</a>
+              Order
             </Button>
           </Link>
     </div>
