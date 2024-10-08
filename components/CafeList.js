@@ -1,7 +1,8 @@
-import React from "react";
+
 import Dishes from "./dishes"
-import { useContext, useState, useEffect, router } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import axios from "axios";
+import { useRouter } from 'next/router';
 
 
 //import { AppContext } from "./context"
@@ -28,18 +29,13 @@ function CafeList(props) {
   //const { cart } = useContext(AppContext);
   //const [state, setState] = useState(cart);
 
-  
 
-  const { data: session } = useSession()
-  if (session) {
-    console.log("Session: ", session);
-  } else {
-    console.log("No Session: ", null);
-  }
-
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
 
   useEffect(() => {
+  
     axios
         .get(
             `http://localhost:3000/api/cafes`
@@ -57,6 +53,8 @@ function CafeList(props) {
       console.log(`Query Data: ${JSON.stringify(cafes)}`)
     }, []); 
 
+    
+
 
   // let searchQuery = cafes.filter((res) => {
   //   return res.name.toLowerCase().includes(props.search)
@@ -64,13 +62,17 @@ function CafeList(props) {
 
   // cafeID = searchQuery[0] ? searchQuery[0].id : null; 
 
+  if (status === "unauthenticated") {
+    router.push("/api/auth/signin"); // redirect if you're not logged in
+  }
+
   //definet renderer for Dishes
   const renderDishes = (cafeId) => {
     console.log(`renderDishes: cafeId: ${cafeId}`);
     return (<Dishes theCafeId={cafeId}> </Dishes>)
   };
 
-  if (cafes.length > 0) {
+  if(cafes.length > 0) {
     const cafeList = cafes.map((res) => (
       <Col xs="6" sm="4" key={res.id}>
         <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
