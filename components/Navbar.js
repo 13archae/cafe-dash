@@ -1,11 +1,63 @@
-import {useContext}from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Container, Nav, NavItem } from "reactstrap";
-import { AppContext } from "./context";
-import styles from "../styles/Navbar.module.css";
-
+import React, { useState, useContext } from 'react';
 // @refresh reset
+
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText,
+} from 'reactstrap';
+
+function NavBar(args) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
+  return (
+    <div>
+      <Navbar {...args}>
+        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="me-auto" navbar>
+            <NavItem>
+              <NavLink href="/cafes/">Cafes</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="https://github.com/reactstrap/reactstrap">
+                GitHub
+              </NavLink>
+            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Options
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>Option 1</DropdownItem>
+                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>Reset</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+          <NavbarText>Simple Text</NavbarText>
+        </Collapse>
+      </Navbar>
+    </div>
+  );
+}
+
+export default NavBar;
+
+/*
 
 const Navbar = () => {
   const {user, setUser, isAuthenticated, setIsAuthenticated} = useContext(AppContext);
@@ -79,3 +131,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+*/

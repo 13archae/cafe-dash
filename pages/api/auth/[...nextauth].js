@@ -10,7 +10,7 @@ import { admin } from "@/firebase.config";
 
 //For Mongodb
 import clientPromise from '@/lib/mongodb';
-const client = await clientPromise;
+
 
 export default NextAuth({
     //adapter: MongoDBAdapter(client),
@@ -24,10 +24,10 @@ export default NextAuth({
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                email: { label: "Email", type: "email", placeholder: "jsmith@example.com" },
+                email: { label: "Email", type: "email", placeholder: "jbrown@example.com" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials, req) {
+            async authorize(credentials,) {
                 try {
                     const client = await clientPromise;
                 
@@ -40,7 +40,15 @@ export default NextAuth({
                     const result = await collection.find(query).toArray();
                 
                     console.log(result);
-                    return result;
+
+                    if (result) {
+                        return true
+                    }
+                    else {
+                        return false
+                    }
+
+                    //return result;
                   } catch(error) {
                     console.error("Error in Users: ", error);
                   }
@@ -50,8 +58,16 @@ export default NextAuth({
     callbacks: {
         async session({ session, token, user }) {
             // Add additional data to the session object, if needed
+            session.user.stripeCustomerId = user.stripeCustomerId;
+            session.user.id = user.id;
+         
             return session;
         },
+        async jwt({ token, user }) {
+            // Access the JWT here
+            console.log("JWT:", token)
+            return token
+          },
     },
 });
 

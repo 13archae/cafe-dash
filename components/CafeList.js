@@ -1,10 +1,10 @@
-
+import React from "react";
 import Dishes from "./dishes"
 import { useContext, useState, useEffect, router } from 'react';
 import axios from "axios";
 
 
-import { AppContext } from "./context"
+//import { AppContext } from "./context"
 import {
   Button,
   Card,
@@ -17,12 +17,26 @@ import {
   Col
 } from "reactstrap";
 
+
+import { useSession } from "next-auth/react"
+
+
 function CafeList(props) {
   const [cafes, setCafes] = useState([]);
   const [cafeId, setCafeId] = useState([]);
   //const [cafeID, setCafeID] = useState([]);
   //const { cart } = useContext(AppContext);
   //const [state, setState] = useState(cart);
+
+  
+
+  const { data: session } = useSession()
+  if (session) {
+    console.log("Session: ", session);
+  } else {
+    console.log("No Session: ", null);
+  }
+
 
 
   useEffect(() => {

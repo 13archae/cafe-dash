@@ -1,6 +1,8 @@
 import React from "react";
-import { FcGoogle } from "react-icons/fc";
+//import { FcGoogle } from "react-icons/fc";
 import { signIn, signOut, useSession} from "next-auth/react";
+import { Container, Row, Col, Button  } from 'reactstrap';
+
 
 //import Head from "next/head";
 //import Image from "next/image";
@@ -9,13 +11,23 @@ import Featured from "@/components/Featured";
 
 export default function index() {
 
-  const { data: session } = useSession()
+  const { data: session } = useSession();
   if(session) {
     return ( 
       <>
-        Signed in as {session.user.email} <br/>
-        <button onClick={() => signOut()}>Sign out</button>
+        <Container >
+          <Row>
+            <Col xs="12" md="7">&nbsp;</Col>
+            <Col xs="12" md="5" fontSize={14}> 
+              Signed in as {JSON.stringify(session.user.name)} &nbsp;:&nbsp;&nbsp;&nbsp;
+            <button onClick={() => signOut()}>Sign out</button>
+            </Col>
+          </Row>
+        </Container>
+        
         <Featured />
+          
+        
       </>
     )
   }
@@ -23,7 +35,7 @@ export default function index() {
   return (
     <>
       Not signed in <br/>
-      <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={() => signIn('google', {callbackUrl: '/cafes'})}>Sign in</button>
     </>
   )
 }

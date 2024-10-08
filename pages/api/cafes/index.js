@@ -4,7 +4,7 @@
 import clientPromise from '@/lib/mongodb';
 const client = await clientPromise;
 
-async function getCafes() {
+async function getCafes(req, username, password) {
   try {
     //await client.connect();
 
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { username, password } = req.body;
     try {
-      const result = await getCafes(username, password);
+      const result = await getCafes(req, username, password);
       res.status(200).json({ success: true, result });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });

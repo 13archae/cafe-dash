@@ -4,9 +4,9 @@ import fetch from "isomorphic-fetch";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CardSection  from "./cardSection";
 import { AppContext } from "./context";
-import Cookies from "js-cookie";
 
-function CheckoutForm() {
+
+function CheckoutForm({userToken}) {
   const [data, setData] = useState({
     address: "",
     city: "",
@@ -14,9 +14,25 @@ function CheckoutForm() {
     stripe_id: "",
   });
   const [error, setError] = useState("");
-  const stripe = useStripe();
+  const stripeh = useStripe();
   const elements = useElements();
   const { cart, user } = useContext(AppContext);
+
+
+
+  //const { data: session } = useSession();
+
+/*   const customer = (async function createStripeCustomer(stripe, email) {
+    const customer = await stripe.customers.create({
+      name: 'TestUser',
+      email: "user@test.org"
+    });
+    return customer;
+  })(stripe, user.email); */
+
+
+ 
+  
 
   function onChange(e) {
     // set the key = to the name property equal to the value typed
@@ -27,12 +43,12 @@ function CheckoutForm() {
 
   async function submitOrder() {
     event.preventDefault();
+    
 
-    console.log("user._id: ", user._id);
 
-    const userId = user._id;
+    //console.log("user._id: ", session.user._id);
+    const userId = 543211;//session.user._id;
 
-    console.log("userId: ", userId);
 
     // // Use elements.getElement to get a reference to the mounted Element.
     const cardElement = elements.getElement(CardElement);
@@ -42,8 +58,11 @@ function CheckoutForm() {
     // get token back from stripe to process credit card
     const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-    const token = await stripe.createToken(cardElement);
-    const userToken = Cookies.get("token");
+    const token = await stripeh.createToken(cardElement);
+    //const userToken = session.accessToken
+    console.log("Token: CheckoutForm: ", token.token.id);
+
+    const source = token;
 
 /* console.log("DATA:  :", JSON.stringify({
   user: user,
@@ -52,11 +71,17 @@ function CheckoutForm() {
   address: data.address,
   city: data.city,
   state: data.state,
-  token: token.id})); */
+  source: source.token,
+  //userToken: userToken
+}));  */
     
     const response = await fetch(`${API_URL}/api/orders`, {
       method: "POST",
-      headers: userToken && { Authorization: `Bearer ${userToken}` },
+      headers: userToken && {  
+        Authorization: `Bearer ${userToken}`,
+        'Content-Type': 'application/json'
+        
+    },
       body: JSON.stringify({
         userId: userId,
         amount: Number(Math.round(cart.total + "e2") + "e-2"),
@@ -64,14 +89,14 @@ function CheckoutForm() {
         address: data.address,
         city: data.city,
         state: data.state,
-        token: token.id,
+        source: source.token,
       
       }),
     });
 
     if (!response.ok) {
       setError();
-      console.log("SUCCESS");
+      console.log("failed to process order");
     }
 
     // OTHER stripe methods you can use depending on app

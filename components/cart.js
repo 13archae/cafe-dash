@@ -105,7 +105,7 @@ const checkoutItems = ()=>{
             {checkoutItems()}
           </div>
           
-          //{console.log(`Router Path: ${router.asPath}`)}
+          {console.log(`Router Path: ${router.asPath}`)}
         </CardBody>
       </Card>
       <style jsx>{`

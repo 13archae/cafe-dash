@@ -1,20 +1,17 @@
 //const { MongoClient, ServerApiVersion } = require('mongodb');
 
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 //session MongoDB Client
 import clientPromise from '@/lib/mongodb';
 const client = await clientPromise;
 
-const stripe = require("stripe")(
-  // Enter your private key for test environment of STRIPE here
-  process.env.STRIPE_SECRET_KEY
-);
 
-async function insertOrder( userId, address, amount, dishes, token, city, state) {
+
+async function insertOrder( userId, address, amount, dishes, source, city, state) {
   try { 
 
-    //await client.connect();
-
-    console.log("Token in ")
+    //console.log("Source in: ", source);
 
     const stripeAmount = Math.floor(amount * 100);
     // charge on stripe
@@ -22,7 +19,7 @@ async function insertOrder( userId, address, amount, dishes, token, city, state)
       amount: stripeAmount,
       currency: "usd",
       description: `Order ${new Date()} by ${userId}`,
-      source: token,
+      source: source.id,
     });
 
     const database = client.db('cafe-app');
@@ -49,9 +46,17 @@ async function insertOrder( userId, address, amount, dishes, token, city, state)
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { userId, address, amount, dishes, token, city, state } = req.body;
+
+    
     try {
-      const result = await insertOrder(userId, address, amount, dishes, token, city, state);
+
+      console.log("Request Body: ", req.body);
+
+    const { userId, address, amount, dishes, source, city, state } = JSON.parse(req.body);
+
+      console.log("userId: ", userId, "\naddress: ", address, "\namount: ", amount, "\dishes: ", dishes, "\nsource: ", source, "\ncity: ", city, "\nstate: ", state)
+
+      const result = await insertOrder(userId, address, amount, dishes, source, city, state);
       res.status(200).json({ success: true, result });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });

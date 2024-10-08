@@ -8,16 +8,25 @@ import CheckoutForm from "@/components/checkoutForm";
 import { AppContext } from "@/components/context";
 import Cart from "@/components/cart";
 
+import { signIn, signOut, useSession} from "next-auth/react";
+import { getToken } from "next-auth/jwt"
+
 function Checkout() {
   // get app context
   const { isAuthenticated } = useContext(AppContext);
   // isAuthenticated is passed to the cart component to display order button
   //const isAuthenticated  = true;
 
+  const { data: session } = useSession();
+
+
+
   // load stripe to inject into elements components
   const stripePromise = loadStripe(
     `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
   );
+
+console.log("CheckoutSession: ", session);
 
   return (
     <Row>

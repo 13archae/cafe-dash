@@ -1,5 +1,5 @@
 import Footer from "./Footer";
-import Navbar from "./Navbar";
+import Navbar from "./NavBar";
 import Featured from "./Featured";
 
 const Layout = ({ children }) => {
