@@ -39,6 +39,7 @@ export default NextAuth({
                     console.log("User:  ", user);
 
                     if (user) {
+                        user.name = user.username;
                         return user;
                     } else {
                         return null;
@@ -58,12 +59,26 @@ export default NextAuth({
     callbacks: {
         async session({ session, token, user }) {
             // Add additional data to the session object, if needed
-            session.user = user;
-         
+            session.user.id = token.id;
+            session.user.name = token.name;
+            session.user.email = token.email;
             return session;
         },
         async jwt({ token, user }) {
             // Access the JWT here
+            if (user) {
+                console.log("User: ", user);
+                token.id = user._id;
+                token.email = user.email;
+                if(!token.name) {
+                    token.name = user.username;
+                }
+                else {
+                    token.name = user.name;
+                } 
+                
+
+              }
             console.log("JWT:", token)
             return token
           },
