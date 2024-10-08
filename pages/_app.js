@@ -101,7 +101,6 @@ removeItem = (item) => {
   setState({cart:newCart});
 }
 
-
   return (
     <SessionProvider session={session}>
     <AppContext.Provider value={{

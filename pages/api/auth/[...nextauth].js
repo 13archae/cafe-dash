@@ -13,21 +13,18 @@ import clientPromise from '@/lib/mongodb';
 
 
 export default NextAuth({
+    debug: true,
+    session: { strategy: "jwt" },
     //adapter: MongoDBAdapter(client),
     adapter: FirestoreAdapter(),//getAuth(admin)),
     providers: [
-        
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        }),
         CredentialsProvider({
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "jbrown@example.com" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials,) {
+            async authorize(credentials) {
                 try {
                     const client = await clientPromise;
                 
@@ -37,29 +34,31 @@ export default NextAuth({
                     const query = {  $and: [{"email": {$eq: credentials.email}}, {"password": {$eq: credentials.password}}] }; ;
                 
                     // Find all documents in the collection
-                    const result = await collection.find(query).toArray();
+                    const user = await collection.findOne(query);
                 
-                    console.log(result);
+                    console.log("User:  ", user);
 
-                    if (result) {
-                        return true
-                    }
-                    else {
-                        return false
+                    if (user) {
+                        return user;
+                    } else {
+                        return null;
                     }
 
-                    //return result;
                   } catch(error) {
                     console.error("Error in Users: ", error);
                   }
             },
         }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        })
+        
     ],
     callbacks: {
         async session({ session, token, user }) {
             // Add additional data to the session object, if needed
-            session.user.stripeCustomerId = user.stripeCustomerId;
-            session.user.id = user.id;
+            session.user = user;
          
             return session;
         },

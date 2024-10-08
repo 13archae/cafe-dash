@@ -13,19 +13,29 @@ import { useSession } from "next-auth/react"
 export default function Cafes() {
     //const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AppContext);
 
-    const router = useRouter()
+    const router = useRouter();
 
-    const { data: session } = useSession()
+    const { data: session, status } = useSession();
+
+    console.log("status: ", status);
+
+    // if (status === "unauthenticated") {
+    //   return <p>Access Denied</p>
+
+    //   //router.push("/");
+    // }
 
 
-    useEffect(() => {
+    /* useEffect(() => {
 
         console.log("Session: ", session);
+
+        
 
         /* if (!data) {
           router.push("/api/auth/signin"); // redirect if you're not logged in
         } */
-      }, []);  
+      /*}, []);  */ 
 
   return (
     <div className="container">
@@ -46,4 +56,5 @@ export default function Cafes() {
         <Cart></Cart>
     </div>
   );
+
 }

@@ -34,8 +34,17 @@ export default function index() {
   else{
   return (
     <>
-      Not signed in <br/>
-      <button onClick={() => signIn('google', {callbackUrl: '/cafes'})}>Sign in</button>
+      <Container >
+          <Row>
+            <Col xs="12" md="7">&nbsp;</Col>
+            <Col xs="12" md="5" fontSize={14}> 
+            Not signed In &nbsp;:&nbsp;&nbsp;&nbsp;
+            <button onClick={() => signIn( undefined, {callbackUrl: '/cafes'})}>Sign in</button>
+            </Col>
+          </Row>
+        </Container>
+        
+        <Featured />
     </>
   )
 }
