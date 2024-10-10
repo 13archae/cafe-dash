@@ -25,7 +25,7 @@ const Register = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/"); // redirect if you're not logged in
+      router.push("/"); // redirect if you're are logged in
     }
   }, []);
 
@@ -34,9 +34,7 @@ const Register = () => {
       <Row>
         <Col sm="12" md={{ size: 5, offset: 3 }}>
           <div className="paper">
-            <div className="header">
-              <img src="/path/to/logo.png" alt="Logo" />
-            </div>
+            
             <section className="wrapper">
               {Object.entries(error).length !== 0 &&
                 error.constructor === Object &&
@@ -92,11 +90,7 @@ const Register = () => {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <span>
-                      <a href="">
-                        <small>Forgot Password?</small>
-                      </a>
-                    </span>
+                  
                     <Button
                       style={{ float: "right", width: 120 }}
                       color="primary"
@@ -106,7 +100,7 @@ const Register = () => {
 
                         axios
                           .post(
-                              `http://localhost:3000/api/user/signup`,
+                              process.env.NEXT_PUBLIC_API_ROOT+ `/api/user/signup`,
                               { 
                                   username: data.username,
                                   email: data.email,
@@ -120,6 +114,7 @@ const Register = () => {
                             //ctx.setUser(res.data.user);
                             setLoading(false);
                             console.log(`registered user: ${JSON.stringify(res.data)}`)
+                            router.push("/");
                           })
                           .catch((error) => {
                             console.log(`error in register: ${error}`)

@@ -1,15 +1,24 @@
 import React, { useState, useContext } from 'react';
+import { signIn, signOut, useSession} from "next-auth/react";
+import { useRouter } from 'next/router';
 
-import {useSession} from "next-auth/react";
 // @refresh reset
 
 
 function NavBar(args) {
   const [isOpen, setIsOpen] = useState(true);
+  const [query, setQuery] = useState("");
 
   const toggle = () => setIsOpen(!isOpen);
 
   const { data: session, status } = useSession();
+
+  const router = useRouter();
+
+  const signUp = () => {
+    
+      router.push("/register"); 
+    }
 
   return (
 
@@ -18,7 +27,7 @@ function NavBar(args) {
       <a className="navbar-brand" href="/">Cafe Dash</a>
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
-          <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+          <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
         </li>
         <li className="nav-item">
 
@@ -26,27 +35,39 @@ function NavBar(args) {
             {status !== "authenticated" && <a className="nav-link disabled" href="/cafes">Our Cafes</a>}
           
         </li>
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a className="dropdown-item" href="#">Action</a>
-            <a className="dropdown-item" href="#">Another action</a>
-            <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link disabled" href="#">Disabled</a>
-        </li>
+        
       </ul>
-      <form className="form-inline my-2 my-lg-0">
-        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+     
+      {status === "authenticated" &&  (
+      
+      <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+      <button class="btn btn-outline-success my-2 my-sm-0" onChange={(e) =>
+                    setQuery(e.target.value.toLocaleLowerCase())
+                    }
+                    value={query}>Search</button>
+    </form>
+   
+    
+      )
+}
+
+  
+      {status === "authenticated" && <span class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome&nbsp; </span> }
+      {status === "authenticated" && JSON.stringify(session.user.name) }
+    {status === "authenticated" &&   <span class="navbar-text">&nbsp;&nbsp;&nbsp;</span> }
+      {status === "authenticated" &&  <button onClick={() => signOut()}>Sign out</button>}
+
+      {status !== "authenticated" && <span class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> }
+      {status !== "authenticated" &&  <button onClick={() => signUp()}>Sign Up</button>}
+      {status !== "authenticated" &&   <span class="navbar-text">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span> }
+      {status !== "authenticated" &&  <button onClick={() => signIn()}>Sign In</button>}
     </nav>
   );
 }
+
+
+
+
 
 export default NavBar;

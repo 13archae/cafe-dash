@@ -27,7 +27,7 @@ function Dishes({ theCafeId }) {
     } 
     axios
         .post(
-            `http://localhost:3000/api/dishes`,
+            process.env.API_ROOT + `api/dishes`,
             { 
               cafeId: theCafeId
           }

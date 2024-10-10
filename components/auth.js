@@ -5,7 +5,7 @@ import Router from "next/router";
 import Cookie from "js-cookie";
 import axios from "axios";
 
-const API_URL = "http://localhost:3000"; //process.env.API_ROOT || "Missing API_ROOT";
+const API_URL = process.env.API_ROOT || "Missing API_ROOT";
 
 //register a new user
 export const registerUser = (username, email, password) => {

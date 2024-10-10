@@ -12,40 +12,11 @@ import Featured from "@/components/Featured";
 export default function index() {
 
   const { data: session } = useSession();
-  if(session) {
-    return ( 
-      <>
-        <Container >
-          <Row>
-            <Col xs="12" md="7">&nbsp;</Col>
-            <Col xs="12" md="5" fontSize={14}> 
-              Signed in as {JSON.stringify(session.user.name)} &nbsp;:&nbsp;&nbsp;&nbsp;
-            <button onClick={() => signOut()}>Sign out</button>
-            </Col>
-          </Row>
-        </Container>
-        
-        <Featured />
-          
-        
-      </>
-    )
-  }
-  else{
-  return (
-    <>
-      <Container >
-          <Row>
-            <Col xs="12" md="7">&nbsp;</Col>
-            <Col xs="12" md="5" fontSize={14}> 
-            Not signed In &nbsp;:&nbsp;&nbsp;&nbsp;
-            <button onClick={() => signIn( undefined, {callbackUrl: '/cafes'})}>Sign in</button>
-            </Col>
-          </Row>
-        </Container>
-        
-        <Featured />
-    </>
+ 
+  return ( 
+    
+    <Featured />
+         
   )
-}
+  
 }

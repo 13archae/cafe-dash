@@ -25,7 +25,7 @@ import { useSession } from "next-auth/react"
 function CafeList(props) {
   const [cafes, setCafes] = useState([]);
   const [cafeId, setCafeId] = useState([]);
-  //const [cafeID, setCafeID] = useState([]);
+  const [cafeID, setCafeID] = useState([]);
   //const { cart } = useContext(AppContext);
   //const [state, setState] = useState(cart);
 
@@ -38,7 +38,7 @@ function CafeList(props) {
   
     axios
         .get(
-            `http://localhost:3000/api/cafes`
+            process.env.API_ROOT + `/api/cafes`
         )
         .then((res) => {
           setCafes(res.data.result);
@@ -54,22 +54,23 @@ function CafeList(props) {
     }, []); 
 
     
+    if (status === "unauthenticated") {
+      router.push("/"); 
+    }
 
 
-  // let searchQuery = cafes.filter((res) => {
-  //   return res.name.toLowerCase().includes(props.search)
-  //  }) || [];
+  let searchQuery = cafes.filter((res) => {
+     return res.name.toLowerCase().includes(props.search)
+    }) || [];
 
-  // cafeID = searchQuery[0] ? searchQuery[0].id : null; 
+  setCafeId(searchQuery[0] ? searchQuery[0].id : null); 
 
-  if (status === "unauthenticated") {
-    router.push("/api/auth/signin"); // redirect if you're not logged in
-  }
+  
 
   //definet renderer for Dishes
-  const renderDishes = (cafeId) => {
+  const renderDishes = (cafeID) => {
     console.log(`renderDishes: cafeId: ${cafeId}`);
-    return (<Dishes theCafeId={cafeId}> </Dishes>)
+    return (<Dishes theCafeId={cafeID}> </Dishes>)
   };
 
   if(cafes.length > 0) {
