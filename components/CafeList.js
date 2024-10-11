@@ -25,11 +25,6 @@ import { useSession } from "next-auth/react"
 function CafeList(props) {
   const [cafes, setCafes] = useState([]);
   const [cafeId, setCafeId] = useState([]);
-  //const [cafeID, setCafeID] = useState([]);
-  //const { cart } = useContext(AppContext);
-  //const [state, setState] = useState(cart);
-
-
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -79,13 +74,13 @@ function CafeList(props) {
         <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
           <CardImg
             top={true}
-            style={{ height: 200 }}
+            style={{ height: 150 }}
             src={
                res.image.url
             }
           />
           <CardBody>
-          <CardTitle>{res.name}</CardTitle>  
+          <CardTitle >{res.name}</CardTitle>  
             <CardText>{res.description}</CardText>
           </CardBody>
           <div className="card-footer">

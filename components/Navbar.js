@@ -16,9 +16,8 @@ function NavBar(args) {
   const router = useRouter();
 
   const signUp = () => {
-    
-      router.push("/register"); 
-    }
+    router.push("/register"); 
+  }
 
   return (
 
@@ -35,34 +34,44 @@ function NavBar(args) {
             {status !== "authenticated" && <a className="nav-link disabled" href="/cafes">Our Cafes</a>}
           
         </li>
+        <li className="nav-item">
+
+            {status === "authenticated" && <a className="nav-link" href="/orders">Orders</a>}
+            {status !== "authenticated" && <a className="nav-link disabled" href="/orders">Orders</a>}
+          
+        </li>
         
       </ul>
      
       {status === "authenticated" &&  (
-      
-      <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button className="btn btn-outline-success my-2 my-sm-0" onChange={(e) =>
-                    setQuery(e.target.value.toLocaleLowerCase())
-                    }
-                    value={query}>Search</button>
-    </form>
-   
+      <>
+          <form className="form-inline my-2 my-lg-0">
+          <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+          <button className="btn btn-outline-success my-2 my-sm-0" onChange={(e) =>
+                        setQuery(e.target.value.toLocaleLowerCase())
+                        }
+                        value={query}>Search</button>
+        </form>
+
+          
+      </>
     
-      )
+    )
 }
 
   
-      {status === "authenticated" && <span className="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome&nbsp; </span> }
-      {status === "authenticated" && JSON.stringify(session.user.name) }
-    {status === "authenticated" &&   <span className="navbar-text">&nbsp;&nbsp;&nbsp;</span> }
-      {status === "authenticated" &&  <button onClick={() => signOut()}>Sign out</button>}
+    {status === "authenticated" && <span className="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> }
+    {status === "authenticated" && session.user.name }
+    {status === "authenticated" &&   <span className="navbar-text">&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;</span> }
+    {status === "authenticated" &&  <span style={{ cursor: 'pointer' }} onClick={() => signOut()}>Sign out</span>}
 
-      {status !== "authenticated" && <span className="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> }
-      {status !== "authenticated" &&  <button onClick={() => signUp()}>Sign Up</button>}
-      {status !== "authenticated" &&   <span className="navbar-text">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span> }
-      {status !== "authenticated" &&  <button onClick={() => signIn()}>Sign In</button>}
-    </nav>
+    {status !== "authenticated" && <span className="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> }
+    {status !== "authenticated" &&  <span style={{ cursor: 'pointer' }} onClick={() => signUp()}>Sign Up</span>}
+    {status !== "authenticated" &&   <span className="navbar-text">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span> }
+    {status !== "authenticated" &&  <span style={{ cursor: 'pointer' }} onClick={() => signIn()}>Sign In</span>}
+  </nav>
+    
+    
   );
 }
 

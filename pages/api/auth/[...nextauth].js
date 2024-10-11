@@ -31,7 +31,7 @@ export default NextAuth({
                     const database = client.db('cafe-app');
                     const collection = database.collection('users');
                 
-                    const query = {  $and: [{"email": {$eq: credentials.email}}, {"password": {$eq: credentials.password}}] }; ;
+                    const query = {  $and: [{"email": {$eq: credentials.email}}, {"password": {$eq: credentials.password}}] };
                 
                     // Find all documents in the collection
                     const user = await collection.findOne(query);
@@ -40,6 +40,8 @@ export default NextAuth({
 
                     if (user) {
                         user.name = user.username;
+                        user.id = user._id;
+                        user.email = user.email;
                         return user;
                     } else {
                         return null;

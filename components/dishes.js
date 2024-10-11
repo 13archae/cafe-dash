@@ -78,7 +78,7 @@ function Dishes({ theCafeId }) {
       </>
     );
   } else {
-    return <h1> No Dishes</h1>;
+    return <div style={{align: center}}><h3> No Dishes</h3></div>
   }
 }
 export default Dishes;
