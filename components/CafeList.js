@@ -1,6 +1,6 @@
 
 import Dishes from "./dishes"
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useRouter } from 'next/router';
 
@@ -80,12 +80,12 @@ function CafeList(props) {
             }
           />
           <CardBody>
-          <CardTitle >{res.name}</CardTitle>  
-            <CardText>{res.description}</CardText>
+          <CardTitle style={{"font-size": "14px", "text-align": "center"}} >{res.name}</CardTitle>  
+            <CardText style={{"font-size": "12px", "text-align": "center"}}>{res.description}</CardText>
           </CardBody>
-          <div className="card-footer">
+          <div className="card-footer text-center">
 
-            <Button color="info" onClick={() => setCafeId(res.id)} >Select Dishes</Button>
+            <Button className={"btn btn-dark"} onClick={() => setCafeId(res.id)} >Select Dishes</Button>
 
           </div>
         </Card>

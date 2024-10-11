@@ -90,7 +90,6 @@ const checkoutItems = ()=>{
 // return Cart
   return (
     <div>
-      <h3> Cart</h3>
       <Card style={{ padding: "10px 5px" }} className="cart">
         <CardTitle style={{ margin: 10 }}>Your Order:</CardTitle>
         <hr />
