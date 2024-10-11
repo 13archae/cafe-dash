@@ -40,9 +40,9 @@ function NavBar(args) {
      
       {status === "authenticated" &&  (
       
-      <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button class="btn btn-outline-success my-2 my-sm-0" onChange={(e) =>
+      <form className="form-inline my-2 my-lg-0">
+      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+      <button className="btn btn-outline-success my-2 my-sm-0" onChange={(e) =>
                     setQuery(e.target.value.toLocaleLowerCase())
                     }
                     value={query}>Search</button>
@@ -53,14 +53,14 @@ function NavBar(args) {
 }
 
   
-      {status === "authenticated" && <span class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome&nbsp; </span> }
+      {status === "authenticated" && <span className="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome&nbsp; </span> }
       {status === "authenticated" && JSON.stringify(session.user.name) }
-    {status === "authenticated" &&   <span class="navbar-text">&nbsp;&nbsp;&nbsp;</span> }
+    {status === "authenticated" &&   <span className="navbar-text">&nbsp;&nbsp;&nbsp;</span> }
       {status === "authenticated" &&  <button onClick={() => signOut()}>Sign out</button>}
 
-      {status !== "authenticated" && <span class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> }
+      {status !== "authenticated" && <span className="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> }
       {status !== "authenticated" &&  <button onClick={() => signUp()}>Sign Up</button>}
-      {status !== "authenticated" &&   <span class="navbar-text">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span> }
+      {status !== "authenticated" &&   <span className="navbar-text">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span> }
       {status !== "authenticated" &&  <button onClick={() => signIn()}>Sign In</button>}
     </nav>
   );

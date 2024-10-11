@@ -27,7 +27,7 @@ function Dishes({ theCafeId }) {
     } 
     axios
         .post(
-            process.env.API_ROOT + `api/dishes`,
+          `${process.env.NEXT_PUBLIC_API_ROOT}/api/dishes`,
             { 
               cafeId: theCafeId
           }

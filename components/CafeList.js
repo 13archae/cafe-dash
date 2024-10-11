@@ -25,7 +25,7 @@ import { useSession } from "next-auth/react"
 function CafeList(props) {
   const [cafes, setCafes] = useState([]);
   const [cafeId, setCafeId] = useState([]);
-  const [cafeID, setCafeID] = useState([]);
+  //const [cafeID, setCafeID] = useState([]);
   //const { cart } = useContext(AppContext);
   //const [state, setState] = useState(cart);
 
@@ -38,7 +38,7 @@ function CafeList(props) {
   
     axios
         .get(
-            process.env.API_ROOT + `/api/cafes`
+            `${process.env.NEXT_PUBLIC_API_ROOT}/api/cafes`
         )
         .then((res) => {
           setCafes(res.data.result);
@@ -59,11 +59,11 @@ function CafeList(props) {
     }
 
 
-  let searchQuery = cafes.filter((res) => {
-     return res.name.toLowerCase().includes(props.search)
-    }) || [];
+  // let searchQuery = cafes.filter((res) => {
+  //    return res.name.toLowerCase().includes(props.search)
+  //   }) || [];
 
-  setCafeId(searchQuery[0] ? searchQuery[0].id : null); 
+  //setCafeId(searchQuery[0] ? searchQuery[0].id : null); 
 
   
 

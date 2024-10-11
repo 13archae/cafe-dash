@@ -1,6 +1,6 @@
 /* /pages/register.js */
 
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -13,21 +13,91 @@ import {
   Input,
 } from "reactstrap";
 import axios from "axios";
-import { AppContext } from "@/components/context";
+import Modal from 'react-modal';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+
 
 const Register = () => {
   const [data, setData] = useState({ email: "", username: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({});
-  const router = useRouter()
 
-  const {user, setUser, isAuthenticated, setIsAuthenticated} = useContext(AppContext);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/"); // redirect if you're are logged in
-    }
-  }, []);
+  const [isOpen, setIsOpen] = useState(false)
+  const customStyles = { 
+    overlay: { backgroundColor: 'rgba(0, 0, 0, 0.6)' }, 
+    content: { top: '50%', 
+    left: '50%', 
+    right: 'auto', 
+    bottom: 'auto', 
+    marginRight: '-50%', 
+    transform: 'translate(-50%, -50%)' } 
+  }
+
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+
+
+  const validationSchema = yup.object().shape({
+    username: yup.string().min(6, 'Username must be at least 6 characters').required('Username is required'),
+    email: yup.string().email().matches(emailPattern, 'Invalid email').required('Email is required'),
+    password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      // Handle form submission here
+      setLoading(true);
+
+      console.log(`values: ${JSON.stringify(values)}`);
+
+      
+
+      axios
+        .post(
+            process.env.NEXT_PUBLIC_API_ROOT + `/api/user/signup`,
+            { 
+                username: values.username,
+                email: values.email,
+                password: values.password,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }
+        )
+        .then((res) => {
+          // set authed user in global context object
+          setLoading(false);
+          //console.log(`registered user: ${JSON.stringify(res.data)}`);
+          setIsOpen(true);
+
+          setTimeout(() => {
+            setIsOpen(false);
+            router.push("/");
+          }
+          , 5000);
+          
+        })
+        .catch((error) => {
+          console.log(`error in register: ${error}`)
+          setLoading(false);
+          setIsOpen(false);
+        });
+      console.log(values);
+    },
+  });
+
+
+
+
+  
 
   return (
     <Container>
@@ -36,92 +106,63 @@ const Register = () => {
           <div className="paper">
             
             <section className="wrapper">
-              {Object.entries(error).length !== 0 &&
-                error.constructor === Object &&
-                error.message.map((error) => {
-                  return (
-                    <div
-                      key={error.messages[0].id}
-                      style={{ marginBottom: 10 }}
-                    >
-                      <small style={{ color: "red" }}>
-                        {error.messages[0].message}
-                      </small>
-                    </div>
-                  );
-                })}
-              <Form>
+              <h2>Register</h2>
+              <Form onSubmit={formik.handleSubmit}>
                 <fieldset disabled={loading}>
                   <FormGroup>
-                    <Label>Username:</Label>
+                    <Label htmlFor={"username"}>Username:</Label>
                     <Input
-                      disabled={loading}
-                      onChange={(e) =>
-                        setData({ ...data, username: e.target.value })
-                      }
-                      value={data.username}
-                      type="text"
-                      name="username"
+                      id={"username"}
+                      name={"username"}
+                      type={'text'}
                       style={{ height: 50, fontSize: "1.2em" }}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.username}
                     />
+                    {formik.touched.username && formik.errors.username && (
+                      <div style={{ color: "crimson", fontSize: ".8em" }}>{formik.errors.username}</div>
+                    )}
+
                   </FormGroup>
                   <FormGroup>
-                    <Label>Email:</Label>
+                    <Label htmlFor={"email"}>Email:</Label>
                     <Input
-                      onChange={(e) =>
-                        setData({ ...data, email: e.target.value })
-                      }
-                      value={data.email}
-                      type="email"
-                      name="email"
+                      id={"email"}
+                      name={"email"}
+                      type={"email"}
                       style={{ height: 50, fontSize: "1.2em" }}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
                     />
+                    {formik.touched.email && formik.errors.email && (
+                      <div style={{ color: "crimson", fontSize: ".8em" }}>{formik.errors.email}</div>
+                    )}
                   </FormGroup>
                   <FormGroup style={{ marginBottom: 30 }}>
-                    <Label>Password:</Label>
+                    <Label htmlFor={"password"}>Password:</Label>
                     <Input
-                      onChange={(e) =>
-                        setData({ ...data, password: e.target.value })
-                      }
-                      value={data.password}
-                      type="password"
-                      name="password"
+                      id={"password"}
+                      name={"password"}
+                      type={"password"}
                       style={{ height: 50, fontSize: "1.2em" }}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
                     />
+                    {formik.touched.password && formik.errors.password && (
+                      <div style={{ color: "crimson", fontSize: ".8em" }}>{formik.errors.password}</div>
+                    )}
+                    
                   </FormGroup>
                   <FormGroup>
                   
+                  
                     <Button
                       style={{ float: "right", width: 120 }}
-                      color="primary"
-                      disabled={loading}
-                      onClick={() => {
-                        setLoading(true);
-
-                        axios
-                          .post(
-                              process.env.NEXT_PUBLIC_API_ROOT+ `/api/user/signup`,
-                              { 
-                                  username: data.username,
-                                  email: data.email,
-                                  password: data.password,
-                                  createdAt: new Date(),
-                                  updatedAt: new Date()
-                              }
-                          )
-                          .then((res) => {
-                            // set authed user in global context object
-                            //ctx.setUser(res.data.user);
-                            setLoading(false);
-                            console.log(`registered user: ${JSON.stringify(res.data)}`)
-                            router.push("/");
-                          })
-                          .catch((error) => {
-                            console.log(`error in register: ${error}`)
-                            //setError(error.response.data);
-                            setLoading(false);
-                          });
-                      }}
+                      color="dark"
+                      type="submit"
                     >
                       {loading ? "Loading.." : "Submit"}
                     </Button>
@@ -132,8 +173,23 @@ const Register = () => {
           </div>
         </Col>
       </Row>
+      <Modal isOpen={isOpen} ariaHideApp={false} onRequestClose={() => setIsOpen(false)} style={customStyles}><h3>Success</h3><div>You have successfully registered.  You will be redirected in 5 seconds.</div> 
+      
+      </Modal>
       <style jsx>
         {`
+        input:invalid {
+          border: 2px dashed red;
+        }
+
+        input:invalid:required {
+          background-image: linear-gradient(to right, pink, lightgreen);
+        }
+
+        input:valid {
+          border: 2px solid black;
+        }
+
           .paper {
             border: 1px solid lightgray;
             box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
