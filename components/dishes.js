@@ -54,11 +54,11 @@ function Dishes({ theCafeId }) {
           <Col xs="6" sm="4" style={{ padding: 0 }} key={res.id}>
             <Card style={{ margin: "0 10px" }}>
 
-              <CardImg
+              {/* <CardImg
                 top={true}
                 style={{ height: 150, width: 150 }}
                 src={`${res.image.url}`}
-              />
+              /> */}
               
               <CardBody>
                 <CardTitle style={{"font-size": "14px", "text-align": "center"}}>{res.name}</CardTitle>

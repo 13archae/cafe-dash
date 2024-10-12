@@ -59,18 +59,20 @@ export default NextAuth({
         
     ],
     callbacks: {
-        async session({ session, token, user }) {
+        async session({ session, token}, user) {
             // Add additional data to the session object, if needed
+            //console.log("token: ", token);
             session.user.id = token.id;
             session.user.name = token.name;
             session.user.email = token.email;
+            //console.log("Session: ", session);
             return session;
         },
         async jwt({ token, user }) {
             // Access the JWT here
             if (user) {
                 console.log("User: ", user);
-                token.id = user._id;
+                token.id = user.id;
                 token.email = user.email;
                 if(!token.name) {
                     token.name = user.username;
@@ -81,7 +83,7 @@ export default NextAuth({
                 
 
               }
-            console.log("JWT:", token)
+            //console.log("JWT:", token)
             return token
           },
     },

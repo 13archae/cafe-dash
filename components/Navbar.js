@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+//import { useNavigate } from 'react-router-dom';
 import { signIn, signOut, useSession} from "next-auth/react";
 import { useRouter } from 'next/router';
 
@@ -9,14 +10,23 @@ function NavBar(args) {
   const [isOpen, setIsOpen] = useState(true);
   const [query, setQuery] = useState("");
 
-  const toggle = () => setIsOpen(!isOpen);
-
   const { data: session, status } = useSession();
-
   const router = useRouter();
+  //const navigate = useNavigate();
+
+  const toggle = () => setIsOpen(!isOpen);
 
   const signUp = () => {
     router.push("/register"); 
+  }
+
+const uid = session?.user?.id;
+
+  const handleOrdersClick = () => {  
+    const queryParams = new URLSearchParams({
+      userId: uid
+    });
+    router.push(`/orders?${queryParams.toString()}`);
   }
 
   return (
@@ -36,7 +46,7 @@ function NavBar(args) {
         </li>
         <li className="nav-item">
 
-            {status === "authenticated" && <a className="nav-link" href="/orders">Orders</a>}
+            {status === "authenticated" && <span className="nav-link" onClick={handleOrdersClick}>Orders</span>}
             {status !== "authenticated" && <a className="nav-link disabled" href="/orders">Orders</a>}
           
         </li>
