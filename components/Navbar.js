@@ -29,6 +29,16 @@ const uid = session?.user?.id;
     router.push(`/orders?${queryParams.toString()}`);
   }
 
+  const doSignOut = async () => {
+    const data = await signOut({ callbackUrl: "/", redirect: false });
+    router.push(data.url);
+  }
+
+  const doSignIn = async () => {
+    const data = await signIn({ callbackUrl: "/", redirect: false });
+    router.push(data.url);
+  }
+
   return (
 
 
@@ -46,7 +56,7 @@ const uid = session?.user?.id;
         </li>
         <li className="nav-item">
 
-            {status === "authenticated" && <span className="nav-link" onClick={handleOrdersClick}>Orders</span>}
+            {status === "authenticated" && <span style={{ cursor: 'pointer' }} className="nav-link" onClick={handleOrdersClick}>Orders</span>}
             {status !== "authenticated" && <a className="nav-link disabled" href="/orders">Orders</a>}
           
         </li>
@@ -73,12 +83,12 @@ const uid = session?.user?.id;
     {status === "authenticated" && <span className="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> }
     {status === "authenticated" && session.user.name }
     {status === "authenticated" &&   <span className="navbar-text">&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;</span> }
-    {status === "authenticated" &&  <span style={{ cursor: 'pointer' }} onClick={() => signOut()}>Sign out</span>}
+    {status === "authenticated" &&  <span style={{ cursor: 'pointer' }} onClick={() => doSignOut()}>Sign out</span>}
 
     {status !== "authenticated" && <span className="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> }
     {status !== "authenticated" &&  <span style={{ cursor: 'pointer' }} onClick={() => signUp()}>Sign Up</span>}
     {status !== "authenticated" &&   <span className="navbar-text">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span> }
-    {status !== "authenticated" &&  <span style={{ cursor: 'pointer' }} onClick={() => signIn()}>Sign In</span>}
+    {status !== "authenticated" &&  <span style={{ cursor: 'pointer' }} onClick={() => doSignIn()}>Sign In</span>}
   </nav>
     
     

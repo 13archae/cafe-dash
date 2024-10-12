@@ -93,7 +93,7 @@ function CheckoutForm({userToken}) {
       setIsOpen(true);
       setTimeout(() => {
         setIsOpen(false);
-        router.push("/orders");
+        router.push("/orders?userId=" + userId);
       } 
       , 5000);
     }
