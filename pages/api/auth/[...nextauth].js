@@ -71,7 +71,7 @@ export default NextAuth({
         async jwt({ token, user }) {
             // Access the JWT here
             if (user) {
-                console.log("User: ", user);
+                //console.log("User: ", user);
                 token.id = user.id;
                 token.email = user.email;
                 if(!token.name) {
