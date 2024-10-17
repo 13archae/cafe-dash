@@ -48,15 +48,42 @@ function OrdersList({ theUserId }) {
   if (orders && orders.length > 0) {
     return (
       <>
-        <div>
+        <div className="container">
             <h1>Order List</h1>
             
-              <ul>
-                  {orders.map(order => (
-                      <li key={order._id}>Order Date: {order.createdAt}</li>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-2">
+                  <h5>Order Date</h5>
+                </div>
+                <div className="col-md-4">
+                  <h5>Charge Id</h5>    
+                </div>
+                <div className="col-md-6" >
+                  <h5>Order Details</h5>    
+                </div>
+                </div>
+                
+                {orders.map((order, index) => (
+                  <>
+                  <div className="row" style={{ backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2' }}>
+                <div className="col-md-2">
+                  {order.createdAt.substring(0, 10)}
+                </div>
+                <div className="col-md-4" style={{fontSize: ".8em", color: "indigo"}}>
+                  {order.charge_id}    
+                </div>
+                <div  className="col-md-6"> 
+                    other data
+</div>
+</div>
+
+                </>
+                  
                   ))}
-            </ul> 
-        </div>
+              </div>
+            </div>
+      
       </>
     );
   } else {

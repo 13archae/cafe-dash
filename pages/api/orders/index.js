@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
     const { userId, address, amount, dishes, source, city, state } = JSON.parse(req.body);
 
-      console.log("userId: ", userId, "\naddress: ", address, "\namount: ", amount, "\dishes: ", dishes, "\nsource: ", source, "\ncity: ", city, "\nstate: ", state)
+      console.log("userId: ", userId, "\naddress: ", address, "\namount: ", amount, "\ndishes: ", dishes, "\nsource: ", source, "\ncity: ", city, "\nstate: ", state)
 
       const result = await insertOrder(userId, address, amount, dishes, source, city, state);
       res.status(200).json({ success: true, result });
