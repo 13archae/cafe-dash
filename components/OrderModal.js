@@ -10,7 +10,8 @@ import {
 } from "reactstrap";
 
 const OrderModal = ({ showModal, inorder, onClose }) => {
-  //const [modal, setModal] = useState(showModal);
+  const [modal, setModal] = useState(showModal);
+  //const [dishes, setDishes] = useState([]);
 
   //const toggle = () => setModal(!modal);
 
@@ -28,20 +29,20 @@ const OrderModal = ({ showModal, inorder, onClose }) => {
 
   console.log("In OrderModal:  order:  ", inorder);
   console.log("In OrderModal:  dishes:  ", inorder?.dishes);
+  const dishes = inorder?.dishes;
 
   return (
-    <Modal id={"orderdetailmodal"} style={customStyles} isOpen={showModal}>
-      <ModalHeader>Modal title</ModalHeader>
+    <Modal id={inorder._id} style={customStyles} isOpen={modal}>
+      <ModalHeader>Order Details</ModalHeader>
       <ModalBody>
         Dishes:
-        {inorder?.dishes?.forEach((dish, index) => {
-          dish ? (
+        {dishes.map((dish, index) => {
+          console.log("In OrderModal:  dish:  ", dish);
+          return (
             <div key={index}>
-              Dish: {dish.name} - Quantity: {dish.quantity} - Price: $
+              Dish: {dish?.name} - Quantity: {dish?.quantity} - Price: $
               {dish.price}
             </div>
-          ) : (
-            <div>No dishes</div>
           );
         })}
       </ModalBody>
