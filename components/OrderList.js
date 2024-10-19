@@ -2,34 +2,26 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Modal, Row, Col } from "reactstrap";
+import OrderModal from "@/components//OrderModal";
 
 function OrdersList({ theUserId }) {
   const [orders, setOrders] = useState([]);
 
-  //const theUserId = props.userId;
-
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-  const handleShow = () => {
-    setIsOpen(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const handleItemClick = (item) => {
+    console.log("Item clicked", item);
+    setSelectedItem(item);
+    setShowModal(true);
   };
 
-  const customStyles = {
-    overlay: { backgroundColor: "rgba(0, 0, 0, 0.6)" },
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
+  const handleModalClose = () => {
+    setSelectedItem(null);
+    setShowModal(false);
   };
-
-  console.log(`in OrderList: userId : ${theUserId}`);
 
   useEffect(() => {
     if (!theUserId || theUserId < 1) {
@@ -72,7 +64,7 @@ function OrdersList({ theUserId }) {
             </div>
 
             {orders.map((order, index) => (
-              <>
+              <div key={order._id}>
                 <div
                   className="row"
                   style={{
@@ -90,28 +82,28 @@ function OrdersList({ theUserId }) {
                   </div>
                   <div className="col-md-2">${order.amount / 100}</div>
                   <div className="col-md-4">
-                    <span onClick={handleShow}>Order Details</span>
+                    <button
+                      id={index}
+                      onClick={() => handleItemClick(order)}
+                      style={{ fontSize: ".8em" }}
+                    >
+                      Order Details
+                    </button>
                   </div>
                 </div>
-              </>
-            ))}
-
-            <Modal
-              isOpen={isOpen}
-              ariaHideApp={false}
-              onRequestClose={() => setIsOpen(false)}
-              style={customStyles}
-            >
-              <h3>Success</h3>
-              <div>
-                You have successfully registered. You will be redirected in 5
-                seconds.
-                <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
               </div>
-            </Modal>
+            ))}
           </div>
+
+          {showModal ? (
+            <OrderModal
+              showModal={showModal}
+              inorder={selectedItem}
+              onClose={handleModalClose}
+            />
+          ) : (
+            <>No Order</>
+          )}
         </div>
       </>
     );
