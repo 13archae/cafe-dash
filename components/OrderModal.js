@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Button,
   Modal,
+  Container,
   Row,
   Col,
   ModalHeader,
@@ -35,16 +36,31 @@ const OrderModal = ({ showModal, inorder, onClose }) => {
     <Modal id={inorder._id} style={customStyles} isOpen={modal}>
       <ModalHeader>Order Details</ModalHeader>
       <ModalBody>
-        Dishes:
-        {dishes.map((dish, index) => {
-          console.log("In OrderModal:  dish:  ", dish);
-          return (
-            <div key={index}>
-              Dish: {dish?.name} - Quantity: {dish?.quantity} - Price: $
-              {dish.price}
-            </div>
-          );
-        })}
+        <Container style={{ fontSize: ".7em" }}>
+          <Row style={{ fontWeight: "600", fontSize: "1.1em" }}>
+            <Col>Dishes:</Col>
+          </Row>
+          <Container>
+            <Row style={{ fontWeight: "600" }}>
+              <Col xs={5}>Name:</Col>
+              <Col>Price:</Col>
+              <Col>Quantity:</Col>
+              <Col>Cost</Col>
+            </Row>
+
+            {dishes.map((dish, index) => {
+              console.log("In OrderModal:  dish:  ", dish);
+              return (
+                <Row key={index}>
+                  <Col xs={5}>{dish.name}</Col>
+                  <Col>${dish.price}</Col>
+                  <Col>{dish.quantity}</Col>
+                  <Col>${dish.price * dish?.quantity}</Col>
+                </Row>
+              );
+            })}
+          </Container>
+        </Container>
       </ModalBody>
       <ModalFooter>
         <Button className="btn-close" color="secondary" onClick={onClose}>
