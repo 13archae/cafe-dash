@@ -12,6 +12,11 @@ function OrdersList({ theUserId }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  let USDollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   const handleItemClick = (item) => {
     console.log("Item clicked", item);
     setSelectedItem(item);
@@ -80,7 +85,9 @@ function OrdersList({ theUserId }) {
                   >
                     {order.charge_id}
                   </div>
-                  <div className="col-md-2">${order.amount / 100}</div>
+                  <div className="col-md-2">
+                    {USDollar.format(order.amount / 100)}
+                  </div>
                   <div className="col-md-4">
                     <button
                       id={index}

@@ -16,6 +16,11 @@ const OrderModal = ({ showModal, inorder, onClose }) => {
 
   //const toggle = () => setModal(!modal);
 
+  const USDollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   const customStyles = {
     overlay: { backgroundColor: "rgba(0, 0, 0, 0.6)" },
     content: {
@@ -36,15 +41,15 @@ const OrderModal = ({ showModal, inorder, onClose }) => {
     <Modal id={inorder._id} style={customStyles} isOpen={modal}>
       <ModalHeader>Order Details</ModalHeader>
       <ModalBody>
-        <Container style={{ fontSize: ".7em" }}>
+        <Container style={{ fontSize: ".65em" }}>
           <Row style={{ fontWeight: "600", fontSize: "1.1em" }}>
             <Col>Dishes:</Col>
           </Row>
           <Container>
             <Row style={{ fontWeight: "600" }}>
-              <Col xs={5}>Name:</Col>
-              <Col>Price:</Col>
-              <Col>Quantity:</Col>
+              <Col xs={6}>Name</Col>
+              <Col>Price</Col>
+              <Col>Qty.</Col>
               <Col>Cost</Col>
             </Row>
 
@@ -52,10 +57,10 @@ const OrderModal = ({ showModal, inorder, onClose }) => {
               console.log("In OrderModal:  dish:  ", dish);
               return (
                 <Row key={index}>
-                  <Col xs={5}>{dish.name}</Col>
-                  <Col>${dish.price}</Col>
+                  <Col xs={6}>{dish.name}</Col>
+                  <Col>{USDollar.format(dish.price)}</Col>
                   <Col>{dish.quantity}</Col>
-                  <Col>${dish.price * dish?.quantity}</Col>
+                  <Col>{USDollar.format(dish.price * dish.quantity)}</Col>
                 </Row>
               );
             })}
