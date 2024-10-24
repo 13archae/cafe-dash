@@ -2,7 +2,7 @@
 import { useState, useContext, useEffect } from "react";
 //import {AppContext} from "./context";
 import axios from "axios";
-import { Dish } from "@/components/Dish";
+import Dish from "@/components/Dish";
 
 function Dishes({ theCafeId, dishQuery }) {
   const [dishes, setDishes] = useState();

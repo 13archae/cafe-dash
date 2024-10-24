@@ -10,8 +10,8 @@ import {
   Col,
 } from "reactstrap";
 
-const Dish = ({ res }) => {
-  const { addItem } = useContext(AppContext);
+function Dish({ res }) {
+  //const { addItem } = useContext(AppContext);
 
   return (
     <Col xs="6" sm="4" style={{ padding: 0 }} key={res.id}>
@@ -41,6 +41,6 @@ const Dish = ({ res }) => {
       </Card>
     </Col>
   );
-};
+}
 
 export default Dish;

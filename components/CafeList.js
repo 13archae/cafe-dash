@@ -1,113 +1,83 @@
-
-import Dishes from "./dishes"
-import React, { useState, useEffect } from 'react';
+import Dishes from "./dishes";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useRouter } from 'next/router';
-
+import { useRouter } from "next/router";
+import Cafe from "@/components/Cafe";
+import { AppContext } from "@/components/context";
+import Search from "@/components/Search";
 
 //import { AppContext } from "./context"
-import {
-  Button,
-  Card,
-  CardBody,
-  CardImg,
-  CardText,
-  CardTitle,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import { Container, Row } from "reactstrap";
 
+import { useSession } from "next-auth/react";
 
-import { useSession } from "next-auth/react"
-
-
-function CafeList(props) {
+function CafeList({ query }) {
   const [cafes, setCafes] = useState([]);
   const [cafeId, setCafeId] = useState([]);
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-  
     axios
-        .get(
-            `${process.env.NEXT_PUBLIC_API_ROOT}/api/cafes`
-        )
-        .then((res) => {
-          setCafes(res.data.result);
+      .post(`${process.env.NEXT_PUBLIC_API_ROOT}/api/cafes`, {
+        query: searchTerm,
+      })
+      .then((res) => {
+        setCafes(res.data.result);
+      })
+      .catch((error) => {
+        console.log(`error in cafes: ${error}`);
+        //setError(error.response.data);
+        //setLoading(false);
+      });
+    console.log(`Query Data: ${JSON.stringify(cafes)}`);
+  }, [searchTerm]);
 
-        })
-        .catch((error) => {
-          console.log(`error in cafes: ${error}`)
-          //setError(error.response.data);
-          //setLoading(false);
-          
-        });
-      console.log(`Query Data: ${JSON.stringify(cafes)}`)
-    }, []); 
+  if (status === "unauthenticated") {
+    router.push("/");
+  }
 
-    
-    if (status === "unauthenticated") {
-      router.push("/"); 
-    }
+  const handleSearch = (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
 
-
-  // let searchQuery = cafes.filter((res) => {
-  //    return res.name.toLowerCase().includes(props.search)
-  //   }) || [];
-
-  //setCafeId(searchQuery[0] ? searchQuery[0].id : null); 
-
-  
+    const results = cafes.filter((item) =>
+      item.name.toLowerCase().includes(term.toLowerCase()),
+    );
+    setCafes(results);
+  };
 
   //definet renderer for Dishes
   const renderDishes = (cafeID) => {
     console.log(`renderDishes: cafeId: ${cafeId}`);
-    return (<Dishes theCafeId={cafeID}> </Dishes>)
+    return <Dishes theCafeId={cafeID}> </Dishes>;
   };
 
-  if(cafes.length > 0) {
+  if (cafes.length > 0) {
     const cafeList = cafes.map((res) => (
-      <Col xs="6" sm="4" key={res.id}>
-        <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
-          <CardImg
-            top={true}
-            style={{ height: 150 }}
-            src={
-               res.image.url
-            }
-          />
-          <CardBody>
-          <CardTitle style={{"font-size": "14px", "text-align": "center"}} >{res.name}</CardTitle>  
-            <CardText style={{"font-size": "12px", "text-align": "center"}}>{res.description}</CardText>
-          </CardBody>
-          <div className="card-footer text-center">
-
-            <Button className={"btn btn-dark"} onClick={() => setCafeId(res.id)} >Select Dishes</Button>
-
-          </div>
-        </Card>
-      </Col>
+      <Cafe key={res.id} res={res} setCafeId={setCafeId} />
     ));
 
     return (
-
       <Container>
-        <Row xs='3'>
-          {cafeList}
+        <Row xs="3">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
         </Row>
+        <Row xs="3">{cafeList}</Row>
 
-        <Row xs='3'>
-          {renderDishes(cafeId)}
-        </Row>
-
+        <Row xs="3">{renderDishes(cafeId)}</Row>
       </Container>
-
-    )
+    );
   } else {
-    return <h1> No Cafes Found</h1>
+    return <h1> No Cafes Found</h1>;
   }
 }
-export default CafeList
+export default CafeList;
