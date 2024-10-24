@@ -62,19 +62,23 @@ function CafeList({ query }) {
     ));
 
     return (
-      <Container>
-        <Row xs="3">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </Row>
-        <Row xs="3">{cafeList}</Row>
+      <>
+        <Container style={{ paddingBottom: "20px" }}>
+          <Row xs="3">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </Row>
+        </Container>
+        <Container>
+          <Row xs="3">{cafeList}</Row>
 
-        <Row xs="3">{renderDishes(cafeId)}</Row>
-      </Container>
+          <Row xs="3">{renderDishes(cafeId)}</Row>
+        </Container>
+      </>
     );
   } else {
     return <h1> No Cafes Found</h1>;
