@@ -29,10 +29,6 @@ function OrdersList({ theUserId }) {
   };
 
   useEffect(() => {
-    if (!theUserId || theUserId < 1) {
-      return;
-    }
-
     axios
       .post(`${process.env.NEXT_PUBLIC_API_ROOT}/api/orders/list`, {
         userId: theUserId,

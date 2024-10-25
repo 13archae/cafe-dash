@@ -3,6 +3,8 @@ import React, { useState, useContext } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { AppContext } from "@/components/context";
+import Link from "next/link";
+import Image from "next/image";
 
 // @refresh reset
 
@@ -41,14 +43,14 @@ function NavBar(args) {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/">
-        <img src="img/cafe-dash-logo-300.png" alt="cafe-dash logo" />
-      </a>
+      <Link className="navbar-brand" href="/">
+        <Image src="img/cafe-dash-logo-300.png" alt="cafe-dash logo" />
+      </Link>
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
-          <a className="nav-link" href="/">
+          <Link className="nav-link" href="/">
             Home <span className="sr-only">(current)</span>
-          </a>
+          </Link>
         </li>
         <li className="nav-item">
           {status === "authenticated" && (
@@ -61,9 +63,9 @@ function NavBar(args) {
             </span>
           )}
           {status !== "authenticated" && (
-            <a className="nav-link disabled" href="/orders">
+            <Link className="nav-link disabled" href="/orders">
               Orders
-            </a>
+            </Link>
           )}
         </li>
       </ul>
