@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { AppContext } from "@/components/context";
 import {
   Button,
   Card,
@@ -11,16 +12,16 @@ import {
 } from "reactstrap";
 
 function Dish({ res }) {
-  //const { addItem } = useContext(AppContext);
+  const { addItem } = useContext(AppContext);
 
   return (
     <Col xs="6" sm="4" style={{ padding: 0 }} key={res.id}>
       <Card style={{ margin: "0 10px" }}>
-        {/* <CardImg
-                top={true}
-                style={{ height: 150, width: 150 }}
-                src={`${res.image.url}`}
-              /> */}
+        <CardImg
+          top={true}
+          style={{ height: 200, width: 300 }}
+          src={`${res.image.url}`}
+        />
 
         <CardBody>
           <CardTitle style={{ "font-size": "14px", "text-align": "center" }}>

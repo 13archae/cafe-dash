@@ -42,7 +42,7 @@ function NavBar(args) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="/">
-        Cafe Dash
+        <img src="img/cafe-dash-logo-300.png" alt="cafe-dash logo" />
       </a>
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
@@ -67,31 +67,6 @@ function NavBar(args) {
           )}
         </li>
       </ul>
-
-      {status === "authenticated" && (
-        <>
-          <form className="form-inline my-2 my-lg-0">
-            <input
-              id="search"
-              className="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              value={query}
-            />
-            <button
-              className="btn btn-outline-success my-2 my-sm-0"
-              onChange={(e) => {
-                setQuery(e.target.value.toLocaleLowerCase());
-                alert(`Query: ${query}`);
-              }}
-              value={query}
-            >
-              Search
-            </button>
-          </form>
-        </>
-      )}
 
       {status === "authenticated" && (
         <span className="navbar-text">

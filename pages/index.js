@@ -52,7 +52,7 @@ export default function Cafes() {
       </div>
 
       <CafeList query={query} />
-      <Cart></Cart>
+      {status === "authenticated" ? <Cart></Cart> : <></>}
     </div>
   );
 }

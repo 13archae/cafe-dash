@@ -36,10 +36,6 @@ function CafeList({ query }) {
     console.log(`Query Data: ${JSON.stringify(cafes)}`);
   }, [searchTerm]);
 
-  if (status === "unauthenticated") {
-    router.push("/");
-  }
-
   const handleSearch = (event) => {
     const term = event.target.value;
     setSearchTerm(term);
@@ -51,10 +47,16 @@ function CafeList({ query }) {
   };
 
   //definet renderer for Dishes
-  const renderDishes = (cafeID) => {
-    console.log(`renderDishes: cafeId: ${cafeId}`);
-    return <Dishes theCafeId={cafeID}> </Dishes>;
+  const renderDishes = (cafeID, SearchTerm) => {
+    if (!cafeID || cafeID.length === 0) {
+      cafeID = 1;
+    }
+    console.log(`renderDishes: cafeID: ${cafeID} :: SearchTerm: ${SearchTerm}`);
+    return <Dishes theCafeId={cafeID} dishQuery={SearchTerm} />;
   };
+
+  //blue #3366ff
+  //orange #f97520
 
   if (cafes.length > 0) {
     const cafeList = cafes.map((res) => (
@@ -63,11 +65,13 @@ function CafeList({ query }) {
 
     return (
       <>
-        <Container style={{ paddingBottom: "20px" }}>
+        <Container style={{ paddingBottom: "30px" }}>
           <Row xs="3">
             <input
               type="text"
-              placeholder="Search..."
+              className="form-control mr-sm-2"
+              placeholder="Search our Cafes..."
+              style={{ maxWidth: "600px" }}
               value={searchTerm}
               onChange={handleSearch}
             />
@@ -76,12 +80,30 @@ function CafeList({ query }) {
         <Container>
           <Row xs="3">{cafeList}</Row>
 
-          <Row xs="3">{renderDishes(cafeId)}</Row>
+          <Row xs="3" style={{ padding: "10px" }}>
+            {renderDishes(cafeId, searchTerm)}
+          </Row>
         </Container>
       </>
     );
   } else {
-    return <h1> No Cafes Found</h1>;
+    return (
+      <>
+        <Container style={{ paddingBottom: "30px" }}>
+          <Row xs="3">
+            <input
+              type="text"
+              className="form-control mr-sm-2"
+              placeholder="Search our Cafes..."
+              style={{ maxWidth: "600px" }}
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </Row>
+        </Container>
+        <h3> No Cafes Found</h3>
+      </>
+    );
   }
 }
 export default CafeList;

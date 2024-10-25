@@ -25,3 +25,23 @@ body {
     text-wrap: balance;
   }
 }
+
+/* unvisited link */
+a:link {
+  color: #3366ff;
+}
+
+/* visited link */
+a:visited {
+  color: #3366ff;
+}
+
+/* mouse over link */
+a:hover {
+  color: #f97520;
+}
+
+/* selected link */
+a:active {
+  color: #f97520;
+}
