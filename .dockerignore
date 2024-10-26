@@ -1,0 +1,21 @@
+# Node Modules
+node_modules
+
+# Next.js build output
+.next
+
+# Other build output directories
+out
+dist
+
+# Development-specific files
+.env.local
+.env.*.local
+
+# Git-related files
+.git
+.gitignore
+
+# IDE or editor files
+.idea
+.vscode

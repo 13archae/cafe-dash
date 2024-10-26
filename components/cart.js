@@ -81,7 +81,7 @@ const checkoutItems = ()=>{
       </Badge>
           <Link href="/checkout/">
             <Button style={{ width: "60%" }} color="primary">
-              <a>Order</a>
+              Order
             </Button>
           </Link>
     </div>
@@ -90,7 +90,6 @@ const checkoutItems = ()=>{
 // return Cart
   return (
     <div>
-      <h1> Cart</h1>
       <Card style={{ padding: "10px 5px" }} className="cart">
         <CardTitle style={{ margin: 10 }}>Your Order:</CardTitle>
         <hr />
@@ -105,7 +104,7 @@ const checkoutItems = ()=>{
             {checkoutItems()}
           </div>
           
-          //{console.log(`Router Path: ${router.asPath}`)}
+          {console.log(`Router Path: ${router.asPath}`)}
         </CardBody>
       </Card>
       <style jsx>{`
