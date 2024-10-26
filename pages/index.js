@@ -1,30 +1,58 @@
-import React from "react";
-import { FcGoogle } from "react-icons/fc";
-import { signIn, signOut, useSession} from "next-auth/react";
+import React, { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Image from "next/image";
+import CafeList from "@/components/CafeList";
+import Cart from "@/components/cart";
+import { AppContext } from "@/components/context";
 
-//import Head from "next/head";
-//import Image from "next/image";
-//import styles from "../styles/Home.module.css";
-import Featured from "@/components/Featured";
+import { useSession } from "next-auth/react";
+//import { getToken } from "next-auth/jwt";
 
-export default function index() {
+export default function Cafes() {
+  //const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AppContext);
 
-  const { data: session } = useSession()
-  if(session) {
-    return ( 
-      <>
-        Signed in as {session.user.email} <br/>
-        <button onClick={() => signOut()}>Sign out</button>
-        <Featured />
-      </>
-    )
-  }
-  else{
+  const router = useRouter();
+
+  const { data: session, status } = useSession();
+  const { query, setQuery } = useContext(AppContext);
+
+  console.log("status: ", status);
+
+  // if (status === "unauthenticated") {
+  //   return <p>Access Denied</p>
+
+  //   //router.push("/");
+  // }
+
+  /* useEffect(() => {
+
+        console.log("Session: ", session);
+
+        
+
+        /* if (!data) {
+          router.push("/api/auth/signin"); // redirect if you're not logged in
+        } */
+  /*}, []);  */
+
   return (
-    <>
-      Not signed in <br/>
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  )
-}
+    <div className="container">
+      <Head>
+        <title> Cafes</title>
+        <meta name="description" conntent="Cafe Dash" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-1">&nbsp;</div>
+          <div className="col-sm-1">&nbsp;</div>
+        </div>
+      </div>
+
+      <CafeList query={query} />
+      {status === "authenticated" ? <Cart></Cart> : <></>}
+    </div>
+  );
 }

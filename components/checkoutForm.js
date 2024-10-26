@@ -4,9 +4,13 @@ import fetch from "isomorphic-fetch";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CardSection  from "./cardSection";
 import { AppContext } from "./context";
-import Cookies from "js-cookie";
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/router';
+import Modal from 'react-modal';
 
-function CheckoutForm() {
+
+
+function CheckoutForm({userToken}) {
   const [data, setData] = useState({
     address: "",
     city: "",
@@ -14,9 +18,24 @@ function CheckoutForm() {
     stripe_id: "",
   });
   const [error, setError] = useState("");
-  const stripe = useStripe();
+  const stripeh = useStripe();
   const elements = useElements();
   const { cart, user } = useContext(AppContext);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false)
+  const customStyles = { 
+    overlay: { backgroundColor: 'rgba(0, 0, 0, 0.6)' }, 
+    content: { top: '50%', 
+    left: '50%', 
+    right: 'auto', 
+    bottom: 'auto', 
+    marginRight: '-50%', 
+    transform: 'translate(-50%, -50%)' } 
+  }
+
+ 
+  
 
   function onChange(e) {
     // set the key = to the name property equal to the value typed
@@ -27,36 +46,33 @@ function CheckoutForm() {
 
   async function submitOrder() {
     event.preventDefault();
+    
 
-    console.log("user._id: ", user._id);
 
-    const userId = user._id;
+    //console.log("user._id: ", session.user._id);
+    console.log("session: ", session);
+    const userId = session.user.id;
 
-    console.log("userId: ", userId);
 
     // // Use elements.getElement to get a reference to the mounted Element.
     const cardElement = elements.getElement(CardElement);
 
-    // // Pass the Element directly to other Stripe.js methods:
-    // // e.g. createToken - https://stripe.com/docs/js/tokens_sources/create_token?type=cardElement
-    // get token back from stripe to process credit card
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const token = await stripeh.createToken(cardElement);
+    console.log("Token: CheckoutForm: ", token.token.id);
 
-    const token = await stripe.createToken(cardElement);
-    const userToken = Cookies.get("token");
+    const source = token;
 
-/* console.log("DATA:  :", JSON.stringify({
-  user: user,
-  amount: Number(Math.round(cart.total + "e2") + "e-2"),
-  dishes: cart.items,
-  address: data.address,
-  city: data.city,
-  state: data.state,
-  token: token.id})); */
+    const url  = `${process.env.NEXT_PUBLIC_API_ROOT}/api/orders`;
+
+  console.log("URL: ", url);
     
-    const response = await fetch(`${API_URL}/api/orders`, {
+    const response = await fetch(url, {
       method: "POST",
-      headers: userToken && { Authorization: `Bearer ${userToken}` },
+      headers: userToken && {  
+        Authorization: `Bearer ${userToken}`,
+        'Content-Type': 'application/json'
+        
+    },
       body: JSON.stringify({
         userId: userId,
         amount: Number(Math.round(cart.total + "e2") + "e-2"),
@@ -64,15 +80,24 @@ function CheckoutForm() {
         address: data.address,
         city: data.city,
         state: data.state,
-        token: token.id,
+        source: source.token,
       
       }),
     });
 
     if (!response.ok) {
       setError();
-      console.log("SUCCESS");
+      console.log("failed to process order");
     }
+    else {
+      setIsOpen(true);
+      setTimeout(() => {
+        setIsOpen(false);
+        router.push("/orders?userId=" + userId);
+      } 
+      , 5000);
+    }
+
 
     // OTHER stripe methods you can use depending on app
     // // or createPaymentMethod - https://stripe.com/docs/js/payment_intents/create_payment_method
@@ -112,6 +137,9 @@ function CheckoutForm() {
 
       <CardSection data={data} stripeError={error} submitOrder={submitOrder} />
 
+      <Modal isOpen={isOpen} ariaHideApp={false} onRequestClose={() => setIsOpen(false)} style={customStyles}><h3>Success</h3><div>Your order was placed successfully.  You will be redirected in 5 seconds.</div> 
+      
+      </Modal>
       <style jsx global>
         {`
           .paper {
