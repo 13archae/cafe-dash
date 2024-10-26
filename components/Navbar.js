@@ -44,7 +44,12 @@ function NavBar(args) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" href="/">
-        <Image src="img/cafe-dash-logo-300.png" alt="cafe-dash logo" />
+        <Image
+          src="/img/cafe-dash-logo-300.png"
+          width={300}
+          height={41}
+          alt="cafe-dash logo"
+        />
       </Link>
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
